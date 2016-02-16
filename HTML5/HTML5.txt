@@ -1,0 +1,287 @@
+The <!DOCTYPE> Declaration								
+	The doctype declaration is not case sensitive.							
+		<!DOCTYPE html>						
+		<!DOCTYPE HTML>						
+		ÅcÅcÅc.						
+								
+	<p title="About W3Schools">							
+		When you move the mouse over the element, the title will be displayed as a tooltip.						
+								
+The alt Attribute								
+	The alt attribute specifies an alternative text to be used, when an HTML element cannot be displayed.							
+								
+	The value of the attribute can be read by "screen readers". This way, someone "listening" to the webpage, i.e. a blind person, can "hear" the element.							
+		<img src="w3schools.jpg" alt="W3Schools.com" width="104" height="142">						
+								
+We Suggest: Always Use Lowercase Attributes								
+We Suggest: Always Quote Attribute Values					use pair style in common			
+								
+Headings Are Important								
+	Use HTML headings for headings only. Don't use headings to make text BIG or bold.							
+	Search engines use your headings to index the structure and content of your web pages.							
+								
+The HTML <head> Element								
+	The HTML <head> element has nothing to do with HTML headings.							
+	The HTML <head> element contains meta data. Meta data are not displayed.							
+	The HTML <head> element is placed between the <html> tag and the <body> tag:							
+		<title>My First HTML</title>			The HTML <title> element is meta data. It defines the HTML document's title.			
+					The title will not be displayed in the document, but might be displayed in the browser tab.			
+					The <title> element is required in all HTML/XHTML documents.			
+								
+					The <title> element:			
+					defines a title in the browser tab			
+					provides a title for the page when it is added to favorites			
+					displays a title for the page in search engine results			
+								
+								
+		<meta charset="UTF-8">						
+					The HTML <style> element is used to define internal CSS style sheets.			
+					The HTML <link> element is used to define external CSS style sheets.			
+	Meta data means data about data. HTML meta data is data about the HTML document.							
+								
+	The HTML <link> Element							
+		The <link> element defines the page relationship to an external resource.						
+		The <link> element is most often used to link to style sheets:						
+			<link rel="stylesheet" href="mystyle.css">					
+								
+HTML Display								
+	With HTML, you cannot change the output by adding extra spaces or extra lines in your HTML code.							
+	The browser will remove extra spaces and extra lines when the page is displayed.							
+	Any number of spaces, and any number of new lines, count as only one space.							
+								
+The HTML <pre> Element								
+	The HTML <pre> element defines preformatted text.							
+	The text inside a <pre> element is displayed in a fixed-width font (usually Courier), and it preserves both spaces and line breaks:							
+								
+Styling HTML with CSS								
+	Styling can be added to HTML elements in 3 ways:							
+		Inline - using a style attribute in HTML elements						
+		Internal - using a <style> element in the HTML <head> section						
+		External - using one or more external CSS files						
+								
+The CSS Box Model								
+	Every HTML element has a box around it, even if you cannot see it.							
+	The CSS border property defines a visible border around an HTML element:							
+		border:1px solid black;						
+								
+	The CSS padding property defines a padding (space) inside the border:							
+	The CSS margin property defines a margin (space) outside the border:							
+								
+HTML Images								
+	Always specify the width and height of an image. If width and height are not specified, the page will flicker while the image loads.							
+								
+	The alt Attribute							
+		If a browser cannot find an image, it will display the alt text:						
+		<img src="wrongname.gif" alt="HTML5 Icon" style="width:128px;height:128px;">						
+		The alt attribute is required. A web page will not validate correctly without it.						
+HTML Screen Readers								
+	A screen reader is a software program that can read what is displayed on a screen.							
+	Screen readers are useful to people who are blind, visually impaired, or learning disabled.							
+	Screen readers can read the alt attribute.							
+								
+Width and Height or Style?								
+	Both the width, height, and style attributes are valid in the latest HTML5 standard.							
+	We suggest you use the style attribute. It prevents styles sheets from changing the original size of images:							
+	<img src="html5.gif" alt="HTML5 Icon" style="width:128px;height:128px;">							
+	<img src="html5.gif" alt="HTML5 Icon" width="128" height="128">							ä©ÇﬂÇ»Ç¢
+								
+Using an Image as a Link								
+	To use an image as a link, simply nest the <img> tag inside the <a> tag:							
+		<a href="default.asp">						
+			<img src="smiley.gif" alt="HTML tutorial" style="width:42px;height:42px;border:0;">					
+		</a>						
+		Add "border:0;" to prevent IE9 (and earlier) from displaying a border around the image.						
+								
+HTML Table Headings								
+	Table headings are defined with the <th> tag.							
+	By default, all major browsers display table headings as bold and centered:							
+								
+An HTML Table with Border Spacing								
+	Border spacing specifies the space between the cells.							
+	To set the border spacing for a table, use the CSS border-spacing property:							
+		table {						
+		    border-spacing: 5px;						
+		}						
+	If the table has collapsed borders, border-spacing has no effect.							
+								
+Unordered HTML Lists								
+	An unordered list starts with the <ul> tag. Each list item starts with the <li> tag.							
+	The list items will be marked with bullets (small black circles):							
+	<ul style="list-style-type:disc">							
+		list-style-type:disc The list items will be marked with bullets (default)						
+		list-style-type:circle The list items will be marked with circles						
+		list-style-type:square The list items will be marked with squares						
+		list-style-type:none The list items will not be marked						
+								
+Ordered HTML Lists								
+	An ordered list starts with the <ol> tag. Each list item starts with the <li> tag.							
+	The list items will be marked with numbers:							
+		type="1"	The list items will be numbered with numbers (default)					
+		type="A"	The list items will be numbered with uppercase letters					
+		type="a"	The list items will be numbered with lowercase letters					
+		type="I"	The list items will be numbered with uppercase roman numbers					
+		type="i"	The list items will be numbered with lowercase roman numbers					
+	<ol type="1">							
+								
+HTML Description Lists								
+	A description list is a list of terms, with a description of each term.							
+	The <dl> tag defines the description list, the <dt> tag defines the term (name), and the <dd> tag describes each term:							
+								
+HTML Block and Inline Elements								
+	Every HTML element has a default display value depending on what type of element it is. The default display value for most elements is block or inline.							
+								
+	Block-level Elements							
+		A block-level element always starts on a new line and takes up the full width available (stretches out to the left and right as far as it can).						
+								
+		Examples of block-level elements:						
+		<div>		often used as a container for other HTML elements.				
+			The <div> element has no required attributes, but style and class are common.					
+		<h1> - <h6>						
+		<p>						
+		<form>						
+	Inline Elements							
+		An inline element does not start on a new line and only takes up as much width as necessary.						
+		Examples of inline elements:						
+		<span>		often used as a container for some text.				
+				The <span> element has no required attributes, but style and class are common.				
+		<a>						
+		<img>						
+								
+Website Layout Using HTML5								
+								
+		<header>						
+								
+		<nav>			nav Defines a container for navigation links			
+								
+	<section>						
+								
+			<aside>					
+								
+								
+	<article>			article Defines an independent self-contained article			
+								
+								
+		<footer>						
+								
+								
+HTML Responsive Web Design								
+	Responsive Web Design makes your web page look good on all devices (desktops, tablets, and phones).							
+								
+HTML Iframes								
+	<iframe src="URL"></iframe>							
+	Use the height and width attributes to specify the size.							
+		<iframe src="demo_iframe.htm" width="200" height="200"></iframe>						
+				The attribute values are specified in pixels by default, but they can also be in percent (like "80%").				
+	Use iframe as a Target for a Link							
+		An iframe can be used as the target frame for a link.						
+		The target attribute of the link must refer to the name attribute of the iframe:						
+			<iframe src="demo_iframe.htm" name="iframe_a"></iframe>					
+			<p><a href="http://www.w3schools.com" target="iframe_a">W3Schools.com</a></p>					
+								
+The HTML <noscript> Tag								
+	The <noscript> tag is used to provide an alternate content for users that have disabled scripts in their browser or have a browser that doesn't support client-side scripting.							
+	<noscript>Sorry, your browser does not support JavaScript!</noscript>							
+								
+Omitting <html> and <body>?								
+	In the HTML5 standard, the <html> tag, the <body> tag, and the <head> tag can be omitted.							
+	Declaring a language is important for accessibility applications (screen readers) and search engines.							
+		<html lang="en-US">						
+	Omitting <html> and <body> can crash badly-written DOM/XML software.							
+	Finally, omitting <body> can produce errors in older browsers (IE9).							
+								
+								
+HTML Entities								
+	Reserved characters in HTML must be replaced with character entities.							
+	Character entities are used to display reserved characters in HTML.							
+		&entity_name;						
+		OR						
+		&#entity_number;						
+		To display a less than sign we must write: &lt; or &#60;					<	
+		The advantage of using an entity name, instead of a number, is that the name is easier to remember.						
+								
+	A common character entity used in HTML is the non-breaking space (&nbsp;).							
+		Remember that browsers will always truncate spaces in HTML pages. If you write 10 spaces in your text, the browser will remove 9 of them. To add real spaces to your text, you can use the &nbsp; character entity.						
+								
+		<	&lt;					
+		>	greater than	&gt;	&#62;			
+		&	ampersand	&amp;	&#38;			
+		Åë	cent	&cent;	&#162;			
+		Åí	pound	&pound;	&#163;			
+		\	yen	&yen;	&#165;			
+		?	euro	&euro;	&#8364;			
+		c	copyright	&copy;	&#169;			
+		R	registered trademark	&reg;	&#174;			
+								
+Text Input								
+	<input type="text"> defines a one-line input field for text input:							
+		Also note that the default width of a text field is 20 characters.						
+								
+The Name Attribute								
+	To be submitted correctly, each input field must have a name attribute.							
+	Notice that the value of the "First name" field will not be submitted, because the input element does not have a name attribute.							
+								
+Grouping Form Data with <fieldset>								
+	The <fieldset> element groups related data in a form.							
+	The <legend> element defines a caption for the <fieldset> element.							group.name
+								
+Input Type: password								
+	<input type="password"> defines a password field:							
+	The characters in a password field are masked (shown as asterisks or circles).							
+								
+Input Type: submit								
+	<input type="submit"> defines a button for submitting form input to a form-handler.							
+	If you omit the submit button's value attribute, the button will get a default text:							
+								
+HTML5 Input Types								
+	HTML5 added several new input types							
+		color						
+		date						
+		datetime						
+		datetime-local						
+		email						
+		month						
+		number						
+		range						
+		search						
+		tel						
+		time						
+		url						
+		week						
+								
+The readonly Attribute								
+	The readonly attribute specifies that the input field is read only (cannot be changed):							
+	The readonly attribute does not need a value. It is the same as writing readonly="readonly".							
+		<input type="text" name="firstname" value="John" readonly>						
+								
+The disabled Attribute								
+	The disabled attribute specifies that the input field is disabled.							
+	A disabled element is un-usable and un-clickable.							
+	Disabled elements will not be submitted.							
+	The disabled attribute does not need a value. It is the same as writing disabled="disabled".							
+The autofocus Attribute								
+	The autofocus attribute of the input tag is not supported in Internet Explorer 9 and earlier versions.							
+	First name:<input type="text" name="fname" autofocus><br>							
+	When present, it specifies that an <input> element should automatically get focus when the page loads.							
+								
+HTML5 Elements								
+	HTML5 defines eight new semantic HTML elements. All these are block-level elements.							
+	To secure correct behavior in older browsers, you can set the CSS display property to block:							
+		header, section, footer, aside, nav, main, article, figure {						
+		    display: block; 						
+		}						
+	Internet Explorer 8 and earlier, does not allow styling of unknown elements.							
+		<!--[if lt IE 9]>						
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>					
+		<![endif]-->						
+		The code above is a comment, but versions previous to IE9 will read it (and understand it).						
+		The link to the shiv code must be placed in the <head> element, because Internet Explorer needs to know about all new elements before reading them.						
+								
+								
+XML Stores New Line as LF								
+Windows applications store a new line as: carriage return and line feed (CR+LF).								
+								
+Unix and Mac OSX uses LF.								
+								
+Old Mac systems uses CR.								
+								
+XML stores a new line as LF.								

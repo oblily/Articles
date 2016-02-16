@@ -1,0 +1,35 @@
+What is the difference between ViewBag ViewData and TempData
+
+ViewBag:
+	1: ViewBag is a dynamic property.
+	2: ViewBag's life only lasts during the current http request. 
+	   ViewBag values will be null if redirection occurs.
+	3: ViewBag is actually a wrapper around ViewData.
+	
+	@ViewBag.Name  <---------- ViewBag.Name = "Tom"
+	    View                       Controller
+		
+ViewData:
+	1: It must cast ViewData values to the appropriate data type.
+	2: ViewData and ViewBag both use the same dictionary internally. 
+	   So you cannot have ViewData Key matches with the property name of ViewBag
+		ViewBag.Id = 1;
+		ViewData.Add("Id", 1); // throw runtime exception as it already has "Id" key
+		
+	@ViewData["Name"]  <---------- ViewData["Name"] = "Tom"
+	    View                       Controller
+
+TempData:
+	1: It can be used to store temporary data which can be used in the subsequent request.
+	2: TempData will be cleared out after the completion of a subsequent request.
+	3: TempData is useful when you want to transfer non-sensitive data from one action method to 
+		another action method of the same or a different controller as well as redirects.
+	4: you can't get the same data in the third request because TempData will be cleared out after second request.
+		Call TempData.Keep() to retain TempData values in a third consecutive request.
+	5: TempData value must be type cast before use. Check for null values to avoid runtime error.
+	6: TempData can be used to store only one time messages like error messages, validation messages.
+
+	var model= TempData["ModelName"];  <---------- TempData["ModelName"] = model;
+	    Controller                                     Controller
+	
+		

@@ -1,0 +1,12 @@
+ILSpy
+.NET Decompiler
+
+
+ILSpy is the open-source .NET assembly browser and decompiler.
+
+Development started after Red Gate announced that the free version of .NET Reflector would cease to exist by end of February 2011.
+
+ILSpy requires the .NET Framework 4.0.
+
+
+/* HomePage = http://ilspy.net/ */

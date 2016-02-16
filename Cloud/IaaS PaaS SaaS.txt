@@ -1,0 +1,12 @@
+Infrastructure as a Service (IaaS)
+	The most well known IaaS provider, Amazon Web Services, offers a variety of options, 
+		including their EC2 computing platform, and S3 storage platform.
+Platform as a Service (PaaS)
+	PaaS provides a method for programming languages to interact with services like databases, 
+		web servers, and file storage
+Software as a Service (SaaS)
+
+	Cloud		Enterprise
+	SaaS		Application(SAP,Oracle BS)
+	PaaS		Middleware(DB,ESB,App srvr)
+	IaaS		Virtualization / Hardware / OS

@@ -1,0 +1,16 @@
+Adding a file to a repository using Git Bash
+
+1: Cloning a repository from GitHub to local PC
+	cd YOUR-LOCAL-REPO
+	git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+
+2: Change the current working directory to your local repository.
+
+3: Stage the file for the first commit to your repository.
+	git add .
+
+4: Commit the files that you've staged in your local repository.
+	git commit -m "First commit"
+
+5: Push the changes in your local repository to GitHub.
+	git push origin master

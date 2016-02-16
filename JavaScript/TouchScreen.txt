@@ -1,0 +1,43 @@
+タッチイベントに対応しているか調べる
+	window.TouchEvent が真であるか比較します。
+	TouchEvent インターフェースには、以下の読み取り専用のプロパティがあります。
+		touches		TouchList	接地状態であるすべての Touch オブジェクトのリスト。
+		targetTouches	TouchList	タッチを開始した DOM オブジェクトが同じとなる Touch オブジェクトだけを集めたリスト。
+		changedTouches	TouchList	変化した Touch オブジェクトだけを集めたリスト。
+		ctrlKey		Boolean		Ctrl キーの押下状態を取得する。
+		shiftKey	Boolean		Shift キーの押下状態を取得する。
+		altKey		Boolean		Alt キーの押下状態を取得する。
+		metaKey		Boolean		Meta キーの押下状態を取得する。
+
+TouchList インターフェースについて
+	TouchList オブジェクトの中には、「Touch オブジェクト」が格納されています。
+	「Touch オブジェクト」の総数を取得するには、length プロパティを使用します。
+
+	// TouchList オブジェクトを取得
+	var touch_list = e.changedTouches;
+
+Touch インターフェースについて
+	Touch インターフェースのプロパティについて
+		identifier	Number	タッチを開始すると割り振られる、ユニーク（唯一）な識別番号。 (マルチタッチ用)
+		screenX		Number	モニタのスクリーン領域の左上を原点とした x 座標を取得する。
+		screenY		Number	モニタのスクリーン領域の左上を原点とした y 座標を取得する。
+		clientX		Number	ブラウザのクライアント領域の左上を原点とした x 座標を取得する。
+		clientY		Number	ブラウザのクライアント領域の左上を原点とした y 座標を取得する。
+		pageX		Number	HTML 全体の左上を原点とした x 座標を取得する。
+		pageY		Number	HTML 全体の左上を原点とした y 座標を取得する。
+		target		EventTarget	イベントと関係する EventTarget オブジェクトを取得する。DOM オブジェクトなどが該当。
+
+タッチスクリーン入力を取得する
+	タッチ関連のイベントについて	
+		"touchstart"	TouchEvent	タッチを開始すると実行されるイベント
+		"touchmove"	TouchEvent	タッチしたまま平行移動すると実行されるイベント
+		"touchend"	TouchEvent	タッチを終了すると実行されるイベント
+		"touchcancel"	TouchEvent	タッチ操作を中断させる処理が発生すると実行されるイベント(画面の自動回転など)
+	タッチ操作の終了イベントについて
+		"touchcancel" イベントが発行された場合、"touchend" イベントは発行されません。
+		タッチ操作の終了は、"touchend" と "touchcancel" の 2 箇所で監視する必要があります。
+
+デフォルトのタッチ操作を無効化する
+	デフォルトのタッチ操作を無効化するには、preventDefault() メソッドを使用します。
+
+

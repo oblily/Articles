@@ -1,0 +1,146 @@
+MongoDB
+
+概要：
+MongoDBは「ドキュメント」と呼ばれるJSONのようなデータ形式を用いて、
+その集合を「コレクション」として扱います。そして、コレクションを扱うためにはクエリを発行して操作します。
+
+特徴：
+トランザクション機能なし
+内包JSエンジン、コンソールでJS実行可能
+結合（join）はありません
+
+トランザクションの機能：
+	MongoDBでトランザクションを実現したい場合、次の二つの方法があります。		
+	一つ目はアトミックな操作を使用する方法です。MongoDBではドキュメントへのupdate操作のみ、アトミックが保証されるので、
+		これを利用してトランザクションを実現します。	
+	二つ目はトランザクションの状態を自分で管理する方法です。ドキュメントの中にトランザクションの状態を格納して、
+		手動でトランザクションの状態を管理します。
+
+Mainly Operate
+  Create DB:
+	> use sample-mongo　（Change DB）
+	  switched to db sample-mongo
+	> db.<コレクション名>.insert({登録内容});
+		例：> db.books.insert({_id:1,title:"MongoDBイン・アクション",price:100})
+			WriteResult({ "nInserted" : 1 })
+		　　> db.books.insert({_id:2,title:"JavaScriptリファレンス",price:300})
+			WriteResult({ "nInserted" : 1 })
+　Read DB:
+	> db.books.find()
+	> db.books.find({title:'MongoDBイン・アクション'})
+	> db.books.find({title:{$eq:'MongoDBイン・アクション'}})
+	> db.books.find({price:{$gte:150}})
+
+	==	$eq	等しい
+	!=	$ne	等しくない
+	>	$gt	右辺より大きい
+	>=	$gte	右辺以上
+	<	$lt	右辺未満
+	<=	$lte	右辺以下
+
+　Update DB:
+	db.<コレクション名>.update({条件}, {更新内容})
+		> db.books.update({ _id:2 }, { $set : { title: "JavaScript本格入門" } })
+
+  Delete DB:
+	db.<コレクション名>.remove({条件})
+		> db.books.remove({ _id:2 })
+
+　	dropコマンドでコレクションの削除
+		> db.books.drop()
+
+Node.jsからMongoDBにアクセス		
+	標準では「node-mongodb-native」というモジュールを使用すればアクセス可能ですが、「Mongoose」というツールを使用可能
+	
+Mongooseのインストールと環境設定										
+	% mkdir mongo-sample && cd mongo-sample									
+	% npm install mongoose									
+										
+	% mongo //mongo shell起動									
+	> use book-store									
+	switched to db book-store									
+connect関数でデータベースに接続し、コールバックを設定										
+	mongo-sampleディレクトリにapp.jsファイルを作成し、下記のように記述します。									
+	1. //app.js									
+	2. var mongoose = require('mongoose');									
+	3. //book-storeデータベースへ接続									
+	4. var con = mongoose.connect('mongodb://localhost/book-store');									
+	5. var db = con.connection;									
+	6									
+	7. //接続エラー時にコールバック実行									
+	8. db.on('error', console.error.bind(console, 'connection error:'));									
+	9									
+	10. //接続成功時にコールバック実行									
+	11. db.once('open', function (callback) {									
+	12. 	console.log("connect successfully")									
+	13. });									
+model関数でモデルを定義										
+	Mongooseではモデルを定義し、それに対して処理を行うことでコレクション／ドキュメントの操作を行います。									
+	1. ・									
+	2. ・									
+	3. var Schema = mongoose.Schema;									
+	4									
+	5. var bookSchema = new Schema({									
+	6. 	_id:Number,									
+	7. 	title: String,									
+	8. 	price: Number,									
+	9. 	publishDate: Date,									
+	10. 	author: { type: Number, ref: 'Author' }									
+	11. });									
+	12									
+	13. var authorSchema = new Schema({									
+	14. 	_id:Number,									
+	15. 	name: String,									
+	16. 	books : [{ type: Schema.Types.ObjectId, ref: 'Book' }]									
+	17. });									
+	18									
+	19. var Book = mongoose.model('Book', bookSchema);									
+	20. var Author = mongoose.model('Author', authorSchema);									
+save関数でドキュメントの登録										
+	Authorモデルを作成してsave関数で登録した後、コールバックでBookモデルを登録します。									
+	1. ・									
+	2. ・									
+	3. var authorModel = new Author();									
+	4. 	authorModel._id = 1;									
+	5. 	authorModel.name = "taro";									
+	6. 	authorModel.save(function(err){									
+	7. 		if(err) {									
+	8. 			console.error(err);									
+	9. 		} else {									
+	10. 			var bookModel = new Book();									
+	11. 			bookModel._id = 100;									
+	12. 			bookModel.title = "JavaScriptリファレンス";									
+	13. 			bookModel.price = 100;									
+	14. 			bookModel.publishDate = new Date();									
+	15. 			bookModel.author = authorModel._id;									
+	16. 			bookModel.save(function(err,book){									
+	17. 				if(err) {									
+	18. 					console.error(err);									
+	19. 				} else {									
+	20. 					console.log("bookModel saved:" + book)								
+	21. 				}									
+	22. 			});									
+	23. 		}									
+	24. });								
+findOne関数でデータを1件取得
+	1. Book.findOne({"title" : "JavaScriptリファレンス"})				
+	2. 	.populate("author").exec(function(err, book) {				
+	3. 		if(err) throw new Error(err);				
+	4. 			console.log(book);				
+	5. });	
+
+	実行結果
+	⇒
+	1. //bookの中身	
+	2. { _id: 100,	
+	3. author: { _id: 1, name: 'taro', __v: 0, books: [] },	
+	4. publishDate: Mon Jun 15 2015 18:02:01 GMT+0900 (JST),	
+	5. price: 100,	
+	6. title: 'JavaScriptリファレンス',	
+	7. __v: 0 }	
+	
+
+
+
+
+		

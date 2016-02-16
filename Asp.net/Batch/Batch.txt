@@ -1,0 +1,28 @@
+Make batch exe:
+	1:create console application( ..\A\XX.exe)
+	2:open cmd
+	3:go to project directory(cd ..\A)
+	4:run exe file (XX.exe)
+
+	static void Main(string[] args)
+        {
+            Console.WriteLine("*** Type Number below and Enter to end typping. ***");
+            Console.WriteLine("*** 1: Get Sum from 1 to 1000 ***");
+            //Console.WriteLine("*** 2: Get Subtraction ***");
+           // Console.WriteLine("*** 3: Get Multiplication ***");
+           // Console.WriteLine("*** 4: Get Division ***");
+
+            var str = Console.ReadLine();
+
+            Console.WriteLine("ì¸óÕÇ≥ÇÍÇΩílÇÕÅA" + str + "Ç≈Ç∑ÅB");
+
+            var sum = 0;
+            for (int i=1; i<=100;i++) {
+                sum += i;
+            }
+            Console.WriteLine("sum = " + sum);
+        }
+
+Extension:
+
+	1:add project as some job or step

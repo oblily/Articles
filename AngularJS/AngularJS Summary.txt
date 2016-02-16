@@ -1,0 +1,69 @@
+AngularJS
+
+AngularJSはマスターメンテナンスのようなCRUD系アプリ、業務系アプリといった、		
+各機能が独立した画面として存在し、フォームを使ってデータの送受信を行うようなアプリに向いているといわれています。		
+逆に、ゲームのように変化するデータが多量で速度重視になるアプリや、シングルページアプリケーション（AjaxやWebSocket通信を使用し、画面遷移しないWebアプリ）もあまり向いていない		
+
+
+AngularJSの五つの主な特徴		
+	HTMLテンプレート機能	
+		「エクスプレッション構文」（「{{」と「}}」でくくる式）を使用してロジックを記述する
+		1. <!-- エクスプレッション構文 -->
+		2. <h1>{{ title }}</h1>
+		3. <!-- ロジックの記述も可能 -->
+		4. <h2>{{ price + count }}</h2>
+	双方向データバインディング	
+		1. <!-- 双方向データバインディング -->
+		2. <input type="text" ng-model="message">
+		3. <div>{{message}}</div>
+	DI（依存性注入）によるモジュール管理機能	
+		1. var myApp = angular.module('myApp', ["myServiceModule"]);
+		2. //$scopeとmyServiceをDIする
+		3. myApp.controller('MyController', ['$scope','myService', 
+		4. function($scope,myService){
+		5. $scope.greet = function() {
+		6. //myServiceの関数を使用できる
+		7. $scope.message = myService.sayHello();
+		8. };
+		9. }
+		10. ]);
+	ルーティング機能	
+		1. angular.module('app', ['ngNewRouter'])
+		2. .controller('AppController', ['$router', AppController]);
+		3. //ルーティング定義
+		4. AppController.$routeConfig([
+		5. {path: '/', component: 'home' }
+		6. ]);
+		7. //コントローラー定義
+		8. function AppController ($router) {
+		9. ……
+		10. }
+	Ajax通信機能	
+		「$http」モジュールを使用して通信を行います。
+		1. var myApp = angular.module('myApp');
+		2. myApp.controller('MyController', ['$scope','$http', function($scope,$http){
+		3. $scope.execute = function() {
+		4. $http({method: 'GET', url: '/someUrl'}).
+		5. success(function(data, status, headers, config) {
+		6. // 正常に処理が終了した際に非同期で実行
+		7. }).
+		8. error(function(data, status, headers, config) {
+		9. // エラーが発生した際に非同期で実行
+		10. });
+		11. };
+		12. }]);
+		レスポンスコードが「2xx」の場合にはsuccessが実装され、それ以外の場合にはerrorが実行されます。
+		
+AngularJSの適用範囲を指定する「ng-app」ディレクティブ		
+	<html ng-app>	
+モデルの初期値を設定する「ng-init」ディレクティブ		
+	<body ng-init="userName = 'taro'">	
+入力要素に対してモデルとのバインディングを行う「ng-model」ディレクティブ		
+	<label>user name: <input type="text" ng-model="userName"/></label>	
+		
+AngularJS 2.0		
+	ECMAScript6（ES6）の採用	
+	双方向バインディングの廃止	
+	ng-xxx記法を廃止して、記号（[]、()、#）による式やイベント記述	
+	JavaScriptベースでアノテーションなどを追加したAtScriptを利用	
+	WebComponentsを利用し、コンポーネント化を進める	

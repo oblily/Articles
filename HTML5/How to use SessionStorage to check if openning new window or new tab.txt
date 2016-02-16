@@ -1,0 +1,41 @@
+
+Background:
+
+When you open a new window with CTRL + N or a new tab with CTRL + K from IE8,
+it will use the same session info to open it,
+so if you could not think about it when written code in server with session,
+it would have confusion in you app.
+
+Method:
+
+So How to check if you open a new window or a new tab or not. you can use SessionStorage.
+
+1: In you login page (or you first app page), make a key with value to save in storage.
+
+	<script language="javascript" type="text/javascript">
+		//----------------------
+		//概要：
+		//　sessionStorageに当該ウィンドウの表示フラグを立てる
+    		if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
+        		// セッションストレージが使える
+			if (sessionStorage.getItem('IsDoubleLaunch') == null) {
+				sessionStorage.setItem('IsDoubleLaunch', "false");
+			}
+		}
+		//----------------------
+	</script>
+
+2: In other page, check if the key in storage has the value you set or not.
+
+	<script language="javascript" type="text/javascript">
+		////IEの新規ウィンドウ、タブ複製で開くと、ログインページを表示するように対応
+		// sessionStorageに値があれば二重起動
+		if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
+			if (sessionStorage.getItem('IsDoubleLaunch') == "false") {
+	    			// 同一ウィンドウならば、そのまま
+			} else {
+ 	   			// 新規ウィンドウまた新規タブの場合,別ページに遷移する
+	    			location.href = "/Default.aspx";
+			}
+		}
+	</script>

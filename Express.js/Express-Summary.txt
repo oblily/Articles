@@ -1,0 +1,152 @@
+Express Summary
+
+Expressの主な機能【1】ルーティング			
+	1. //expressモジュールをインポート		
+	2. var express = require('express');		
+	3. var app = express();		
+	4		
+	5. //ルーティング設定		
+	6. app.get('/', function (req, res) {		
+	7. 	res.send('Hello World');		
+	8. });		
+	9		
+	10. //以下、ルーティング情報があればここに追記していく		
+	11		
+	12. app.listen(3000);		
+	13. console.log('Server running at http://localhost:3000/');		
+
+
+	1. //localhost:3000/<数値>の場合に実行されるルート		
+	2. app.get(/^\/[0-9]+$/, function(req, res) {		
+	3. 	res.send('regexp');		
+	4. });		
+	
+	1. app.get('/user/:userId/item/:itemId', function(req, res) {
+	2. 	res.send('userId:' + req.params.userId + ",itemId:" + req.params.itemId);
+	3. });
+
+Expressの主な機能【2】テンプレートエンジン					
+	Expressでは「ejs」「ect」「haml」「jade」など、いろいろなテンプレートエンジンを使用してビューを記述できます。				
+	例：Jade				
+		HTML			
+		1. <!DOCTYPE html>			
+		2. <html lang="ja">			
+		3. <head>			
+		4. <meta charset="utf-8">			
+		5. <title>Template Engine Sample</title>			
+		6. </head>			
+		7. <body>			
+		8. <p>Hello, Template Engines!</p>			
+		9. </body>			
+		10. </html>
+
+		jade
+		1. !!! 5
+		2. html(lang = "ja")
+		3. head
+		4. meta(charset = "utf-8")
+		5. title Template Engine Sample
+		6. body
+		7. p Hello, Template Engines!
+			
+Expressの主な機能【3】アプリのひな型を自動生成							
+	「express-generator」というnpmモジュールを使用すると、アプリのひな型を自動生成することができます。					【1】HTMLやCSS、JavaScriptなどの静的ファイルを使用する							
+		express.static(path[, option])						
+		option:	hidden：hiddenファイルの転送を許可する。デフォルトは「false」				
+			index：デフォルトのファイル名。デフォルトは「index.html」				
+			maxAge：ブラウザーキャッシュをミリ秒で指定できる。デフォルトは「0」				
+			redirect：パスの最後に「/」があるときにリダイレクトする。デフォルトは「true」
+
+	【2】HTTPメソッドや正規表現を使ったルーティング定義					
+		1. app.post('/post', function (req, res) {				
+		2. res.send('POST request!')				
+		3. });				
+					
+		1. app.get('/ab?cd', function(req, res) {				
+		2. res.send('ab?cd or acd');				
+		3. });				
+		URLは「/abcd」か「/acd」がマッチ
+
+		1. app.all('/all', function (req, res, next) {	
+		2. console.log('All Request!')	
+		3. next();	
+		4. })	
+		1. app.get('/ab+cd', function(req, res) {	
+		2. res.send('ab+cd');	
+		3. });	
+		「/abcd」「/abbcd」「/abb……cd」がマッチ	
+				
+
+	【3】MemoryStoreやRedisを使ったセッション管理							
+		Expressではデフォルトでメモリ上（MemoryStore）にデータを保存する仕組みがあります。					
+		% npm install express-session			
+			「http://localhost:3000/memory-store-counter」にアクセスしてみてください。
+			リロードするたびにカウンターの値が増えていきます。			
+		1. var express = require('express');					
+		2. var session = require('express-session');					
+		3					
+		4. var app = express();					
+		5					
+		6. //セッション設定					
+		7. app.use(session({					
+		8. secret : 'secretKey'					
+		9. }));					
+		10					
+		11. //ルーティング設定					
+		12. app.get('/memory-store-counter', function(req, res) {					
+		13. var session = req.session;					
+		14. if (session && session.count) {					
+		15. session.count++;					
+		16. } else {					
+		17. session.count = 1;					
+		18. }					
+		19. res.send('count is ' + session.count)					
+		20. });					
+		21					
+		22. app.listen(3000);					
+		23. console.log('Server running at http://localhost:3000/');					
+
+	【4】エラーをハンドリングする						
+		1. var express = require('express');					
+		2. var session = require('express-session');					
+		3. var app = express();					
+		4					
+		5. //ルーティング設定					
+		6. app.get('/sample-error', function(req, res) {					
+		7. //エラーをthrowする					
+		8. throw new Error("error occurred !!");
+		9. });					
+		10					
+		11. app.listen(3000);					
+		12. console.log('Server running at http://localhost:3000/');					
+						
+
+		1. //ルーティング設定
+		2. app.get('/sample-error', function(req, res, next) {
+		3. try {
+		4. 	//エラーをthrowする
+		5. 	throw new Error("error occurred !!");
+		6. } catch (e) {
+		7. 	next(e);
+		8. }
+		9. });
+		10
+		11. //エラーハンドリング用関数を設定
+		12. app.use(errorHandler);
+		13
+		14. //エラーハンドリング用関数定義
+		15. function errorHandler(err, req, res, next) {
+		16. res.status(500);
+		17. res.send(err.message)
+		18. }
+
+
+
+
+
+
+
+
+
+				
+

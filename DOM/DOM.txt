@@ -1,0 +1,220 @@
+			
+The DOM Programming Interface			
+	In the DOM, all HTML elements are defined as objects.		
+	The programming interface is the properties and methods of each object.		
+			
+Finding elements by class name does not work in Internet Explorer 8 and earlier versions.			
+The querySelectorAll() method does not work in Internet Explorer 8 and earlier versions.			
+			
+ Never use document.write() after the document is loaded. It will overwrite the document.			
+			
+Create an Animation Container			
+	All animations should be relative to a container element.		
+		<div id ="container">	
+		    <div id ="animate">My animation will go here</div>	
+		</div>	
+			
+	Style the Elements		
+	The container element should be created with style = "position: relative".		
+			
+	The animation element should be created with style = "position: absolute".		
+			
+	Example		
+	#container {		
+	    width: 400px;		
+	    height: 400px;		
+	    position: relative;		
+	    background: yellow;		
+	}		
+	#animate {		
+	    width: 50px;		
+	    height: 50px;		
+	    position: absolute;		
+	    background: red;		
+	}		
+			
+The onload and onunload Events			
+			
+	The onload and onunload events are triggered when the user enters or leaves the page.		
+			
+	The onload event can be used to check the visitor's browser type and browser version, and load the proper version of the web page based on the information.		
+			
+	The onload and onunload events can be used to deal with cookies.		
+			
+Event Bubbling or Event Capturing?			
+	There are two ways of event propagation in the HTML DOM, bubbling and capturing.		
+			
+	Event propagation is a way of defining the element order when an event occurs. If you have a <p> element inside a <div> element, and the user clicks on the <p> element, which element's "click" event should be handled first?		
+			
+	In bubbling the inner most element's event is handled first and then the outer: the <p> element's click event is handled first, then the <div> element's click event.		
+			
+	In capturing the outer most element's event is handled first and then the inner: the <div> element's click event will be handled first, then the <p> element's click event.		
+			
+	With the addEventListener() method you can specify the propagation type by using the "useCapture" parameter:		
+			
+	addEventListener(event, function, useCapture);		
+	The default value is false, which will use the bubbling propagation, when the value is set to true, the event uses the capturing propagation.		
+			
+	Example		
+	document.getElementById("myP").addEventListener("click", myFunction, true);		
+	document.getElementById("myDiv").addEventListener("click", myFunction, true);		
+			
+The addEventListener() and removeEventListener() methods are not supported in IE 8 and earlier versions and Opera 6.0 and earlier versions. 			
+However, for these specific browser versions, you can use the attachEvent() method to attach an event handlers to the element, and the detachEvent() method to remove it:			
+			
+			
+Cross-browser solution:			
+	var x = document.getElementById("myBtn");		
+	if (x.addEventListener) {                    // For all major browsers, except IE 8 and earlier		
+	    x.addEventListener("click", myFunction);		
+	} else if (x.attachEvent) {                  // For IE 8 and earlier versions		
+	    x.attachEvent("onclick", myFunction);		
+	}		
+			
+Navigating Between Nodes			
+	You can use the following node properties to navigate between nodes with JavaScript:		
+			
+	parentNode		
+	childNodes[nodenumber]		
+	firstChild		
+	lastChild		
+	nextSibling		
+	previousSibling		
+			
+The nodeName Property			
+	The nodeName property specifies the name of a node.		
+			
+	nodeName is read-only		
+	nodeName of an element node is the same as the tag name		
+	nodeName of an attribute node is the attribute name		
+	nodeName of a text node is always #text		
+	nodeName of the document node is always #document		
+	Note: nodeName always contains the uppercase tag name of an HTML element.		
+			
+The nodeValue Property			
+	The nodeValue property specifies the value of a node.		
+			
+	nodeValue for element nodes is undefined		
+	nodeValue for text nodes is the text itself		
+	nodeValue for attribute nodes is the attribute value		
+			
+A node list is not an array!			
+	A node list may look like an array, but it is not. You can loop through the node list and refer to its nodes like an array. However, you cannot use Array Methods, like valueOf() or join() on the node list.		
+			
+	var	myNodelist = document.getElementsByTagName("p");	
+	var i;		
+	for (i = 0; i <	myNodelist.length; i++) {	
+	   	myNodelist[i].style.backgroundColor = "red";	
+	}		
+			
+The Browser Object Model (BOM)			
+	The window object is supported by all browsers. It represents the browser's window.		
+	All global JavaScript objects, functions, and variables automatically become members of the window object.		
+			
+A practical JavaScript solution (covering all browsers):			
+	var w = window.innerWidth		
+	|| document.documentElement.clientWidth		
+	|| document.body.clientWidth;		
+			
+	var h = window.innerHeight		
+	|| document.documentElement.clientHeight		
+	|| document.body.clientHeight;		
+			
+	The example displays the browser window's height and width: (NOT including toolbars/scrollbars)		
+			
+Window Location			
+	The window.location object can be written without the window prefix.		
+			
+	Some examples:		
+			
+	window.location.href returns the href (URL) of the current page		
+	window.location.hostname returns the domain name of the web host		
+	window.location.pathname returns the path and filename of the current page		
+	window.location.protocol returns the web protocol used (http:// or https://)		
+	window.location.assign loads a new document		
+			
+Window History			
+	The window.history object can be written without the window prefix.		
+			
+	To protect the privacy of the users, there are limitations to how JavaScript can access this object.		
+			
+	Some methods:		
+			
+	history.back() - same as clicking back in the browser		
+	history.forward() - same as clicking forward in the browser		
+			
+Window History Back			
+	The history.back() method loads the previous URL in the history list.		
+			
+Window Navigator			
+	The window.navigator object contains information about the visitor's browser.		
+			
+	Some examples:		
+			
+	navigator.appName		
+	navigator.appCodeName		
+	navigator.platform		
+			
+	Navigator Cookie Enabled		
+		The property cookieEnabled returns true if cookies are enabled, otherwise false:	
+		document.getElementById("demo").innerHTML =	
+		"Cookies Enabled is " + navigator.cookieEnabled;	
+			
+	The Browser Names		
+		The properties appName and appCodeName return the name of the browser:	
+			
+		document.getElementById("demo").innerHTML =	
+		"Name is " + navigator.appName + ". Code name is " + navigator.appCodeName;	
+			
+		IE11, Chrome, Firefox, and Safari return appName "Netscape".	
+		Chrome, Firefox, IE, Safari, and Opera all return appCodeName "Mozilla".	
+			
+JavaScript Popup Boxes			
+	JavaScript has three kind of popup boxes: Alert box, Confirm box, and Prompt box.		
+	Alert Box		
+		window.alert("sometext");	
+		When an alert box pops up, the user will have to click "OK" to proceed.	
+	Confirm Box		
+		var r = confirm("Press a button");	
+		if (r == true) {	
+		    x = "You pressed OK!";	
+		} else {	
+		    x = "You pressed Cancel!";	
+		}	
+	Prompt Box		
+		A prompt box is often used if you want the user to input a value before entering a page.	
+		When a prompt box pops up, the user will have to click either "OK" or "Cancel" to proceed after entering an input value.	
+		var person = prompt("Please enter your name", "Harry Potter");	
+		if (person != null) {	
+		    document.getElementById("demo").innerHTML =	
+		    "Hello " + person + "! How are you today?";	
+		}	
+			
+JavaScript Cookies			
+	JavaScript can create, read, and delete cookies with the document.cookie property.		
+			
+	Create a Cookie with JavaScript		
+		You can also add an expiry date (in UTC time). By default, the cookie is deleted when the browser is closed:	
+			document.cookie="username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC";
+	Read a Cookie with JavaScript		
+		var x = document.cookie;	
+			document.cookie will return all cookies in one string much like: 
+			cookie1=value; cookie2=value; cookie3=value;
+	Change a Cookie with JavaScript		
+			document.cookie="username=John Smith; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+		The old cookie is overwritten.	
+	Delete a Cookie with JavaScript		
+		Deleting a cookie is very simple. Just set the expires parameter to a passed date:	
+			document.cookie =?"username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+		Note that you don't have to specify a cookie value when you delete a cookie.	
+			
+	The Cookie String		
+		The document.cookie property looks like a normal text string. But it is not.	
+			
+		Even if you write a whole cookie string to document.cookie, when you read it out again, you can only see the name-value pair of it.	
+			
+		If you set a new cookie, older cookies are not overwritten. The new cookie is added to document.cookie, so if you read document.cookie again you will get something like:	
+			
+		cookie1=value; cookie2=value;	
+			
+		If you want to find the value of one specified cookie, you must write a JavaScript function that searches for the cookie value in the cookie string.	

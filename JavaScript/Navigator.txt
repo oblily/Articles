@@ -1,0 +1,51 @@
+ナビゲーターについて
+	ナビゲーターは、ブラウザに関する情報がまとまっています。
+	var navigator_obj = window.navigator;
+
+ナビゲーターのプロパティ一覧
+	appCodeName	String	ブラウザのコードネームを取得する（主要ブラウザで不正確）
+	appName		String	ブラウザの名称を取得する（主要ブラウザで不正確）
+	appVersion	String	ブラウザのバージョン情報を取得する（主要ブラウザで不正確）
+	platform	String	ブラウザのプラットフォーム名を取得する
+	userAgent	String	ユーザーエージェント情報を取得する
+	language	String	ブラウザの言語情報を取得する
+	geolocation	Geolocation	Geolocation オブジェクトを取得する
+
+ブラウザの種類を判別する
+	// ユーザーエージェント情報を取得
+	var user_agent = navigator.userAgent;
+
+　	「Internet Explorer」で動作しているか調べる（IEコンポーネントを含む）
+		if(user_agent.indexOf("Trident") != -1)	return true;　//"Trident" は、Internet Explorer 7 以前には含まれません。
+		return (user_agent.indexOf("MSIE") != -1);		//"MSIE" は、Internet Explorer 11 には含まれません。
+
+	「Mozilla Firefox」で動作しているか調べる（派生ブラウザを含む）
+		return (user_agent.indexOf("Firefox") != -1);
+
+	「Opera」で動作しているか調べる
+		if(user_agent.indexOf("OPR/") != -1)	return true; //"OPR/" は、Opera 12 以前には含まれません。
+		return (user_agent.indexOf("Opera") != -1);	//"Opera" は、Opera 14 以降には含まれません。
+
+	「Google Chrome」で動作しているか調べる（Chromium 派生ブラウザを含む）
+		return (user_agent.indexOf("Chrome") != -1);
+
+	「Safari」で動作しているか調べる
+		return (user_agent.indexOf("Safari") != -1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

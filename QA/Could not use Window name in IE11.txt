@@ -1,0 +1,12 @@
+
+Web:
+
+	http://answers.microsoft.com/en-us/ie/forum/ie11-iewindows8_1/ie-11-reset-windowname-when-submitting-a-request/478f3272-19c2-46e9-9247-1ce17a7c51f6?auth=1
+
+
+	IE 11 reset window.name when submitting a request to the same site
+
+	So if you use window.name to check if user open a new windows or a new tab, it will be failure in IE11.
+
+Method:
+	Use sessionStorage

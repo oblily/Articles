@@ -1,0 +1,222 @@
+オブジェクトについて（Object）
+
+プリミティブ型について
+	null、undefined、Boolean、Number、String 型が該当します。
+
+リファレンス型について
+	Object、Array、Function 型など、すべてのオブジェクトが該当します。
+
+Object オブジェクトを作成する
+	new Object ( 値情報 ) :Object
+		第01引数 （値情報）
+		指定したデータ型のコンストラクタ関数を使って、オブジェクトを作成した場合と同等です。
+		null や undefined 値を指定した場合、空の Object オブジェクトが作成されます。
+		var obj = new Object(123);
+
+	初期データを格納しつつ Object オブジェクトを作成する
+		オブジェクトリテラルを使用する
+			中括弧 { } の中に、キー:データ と記述します。キーに指定する名称は、変数の命名規則に従う必要があります。
+			// オブジェクトリテラルを使って、Object オブジェクトを作成する
+			var obj = { aaaaa:null , bbbbb:true , ccccc:123 , ddddd:"あいうえお" };
+			console.log(obj.aaaaa); // null
+		キーをダブルクォーテーションで括った場合
+			キーをダブルクォーテーションで括った場合、変数の命名規則に従う必要はありません。
+			全角や数値などのすべての文字を、キーとして使用することができます。
+
+			var obj = { "添字１":null , "添字２":true , "添字３":123 , "添字４":"あいうえお" };
+			console.log(obj["添字１"]); // null
+
+	プロトタイプを指定して、Object オブジェクトを作成する
+		Object.create ( プロトタイプ , 初期化用パラメータ ) :Object
+		第01引数 （プロトタイプオブジェクト）	
+			デフォルト値を指定したい場合は、Object.prototype をセットします。
+			コンストラクタ関数のプロトタイプを指定して、オブジェクトを作成した時の動作を確認する
+
+			// Object.create メソッドに対応している
+			if(Object.create){
+
+			// ------------------------------------------------------------
+			// MyFunc という名前の関数を宣言する
+			// ------------------------------------------------------------
+			function MyFunc(){
+			}
+
+			// ------------------------------------------------------------
+			// MyFunc のプロトタイプを指定して、オブジェクトを作成する
+			// ------------------------------------------------------------
+			var obj = Object.create(MyFunc.prototype);
+
+			// ------------------------------------------------------------
+			// オブジェクトのコンストラクタは、MyFunc であるか？（実際は MyFunc 関数は実行されていない）
+			// ------------------------------------------------------------
+			console.log(obj.constructor == MyFunc); // true
+
+			// ------------------------------------------------------------
+			// オブジェクトは、MyFunc コンストラクタを使って実体化されたか？（実際は MyFunc 関数は実行されていない）
+			// ------------------------------------------------------------
+			console.log(obj instanceof MyFunc); // true
+
+			// ------------------------------------------------------------
+			// 後から MyFunc 関数を手動的に実行して初期化できる
+			// ------------------------------------------------------------
+			MyFunc.call(obj);
+			}
+		第02引数 （初期化用パラメータ）
+
+			プロパティ名	型		説明						デフォルト
+			value		*		セットする値を指定。				undefined
+			writable	Boolean		書き込みアクセスを許可するか？			true
+			enumerable	Boolean		列挙される事を許可するか？（for..in 文など）	true
+			configurable	Boolean		プロパティの削除を許可するか？	true
+			get		Function	ゲッター用のコールバック関数を指定。	
+			set		Function	セッター用のコールバック関数を指定。	
+
+
+var descriptors = {
+		aaa:{
+			// 値
+			value:true,
+			// 書き込みアクセスを許可するか？
+			writable:true,
+			// 列挙を許可するか？
+			enumerable:true,
+			// 削除を許可するか？
+			configurable:true
+		},
+		bbb:{
+			// 値
+			value:123,
+			// 書き込みアクセスを許可するか？
+			writable:true,
+			// 列挙を許可するか？
+			enumerable:true,
+			// 削除を許可するか？
+			configurable:true
+		},
+		ccc:{
+			// 値
+			value:"あいうえお",
+			// 書き込みアクセスを許可するか？
+			writable:true,
+			// 列挙を許可するか？
+			enumerable:true,
+			// 削除を許可するか？
+			configurable:true
+		}
+	};
+
+var obj = Object.create(prototype_obj , descriptors);
+
+
+オブジェクトのすべてのプロパティに順番にアクセスする
+
+	for..in 文を使用する
+
+オブジェクトの任意のプロパティを削除する	 delete 文を使用します。
+	// aaa プロパティを削除する
+	delete obj.aaa;
+	delete obj["ccc"];
+
+Object クラスのメソッド 
+
+	toString()	オブジェクトから文字列情報を取得する。
+	valueOf()	オブジェクトから値情報を取得する。
+		自身のオブジェクトが得られた場合、値情報が存在しない事を意味します。
+		var obj = new Object(true);
+		console.log(obj.valueOf()); // true
+
+		オーバーライド
+		var obj = new Object(123);
+		obj.valueOf = function (){return 987;};
+		var v = 0 + obj;
+		console.log(v); // 987
+		// オーバーライドを終了する
+		delete obj.valueOf;
+	Object.hasOwnProperty ( "プロパティ名" ) :Boolean	指定したプロパティ名が存在するか調べる。
+		プロパティが存在する場合 true、存在しない場合 false が得られる。
+	Object.isPrototypeOf ( オブジェクト ) :Boolean	自身が、指定オブジェクトのプロトタイプチェーン内に含まれるか調べる。
+		このメソッドは、プロトタイプオブジェクトから呼び出します。
+		var ary = new Array();
+		var prototype_obj = Array.prototype;
+		console.log(prototype_obj.isPrototypeOf(ary)); // true
+
+Object クラスの静的メソッド
+
+	Object.create()	プロトタイプを指定して、オブジェクトを作成する。
+	Object.defineProperty ( オブジェクト , "プロパティ名" , 設定用オブジェクト ) :Object	ディスクリプタを指定して、１つのプロパティを設定する。
+		第01引数で指定したオブジェクトが得られる。
+	Object.defineProperties ( オブジェクト , 設定用オブジェクト ) :Object	ディスクリプタを指定して、複数のプロパティを設定する。
+		第01引数で指定したオブジェクトが得られる。
+	Object.getOwnPropertyDescriptor ( オブジェクト , "プロパティ名" ) :Object	プロパティ名を指定して、ディスクリプタを取得する。
+		戻り値 （ディスクリプタ）
+		ディスクリプタオブジェクトには、以下のプロパティが存在します。
+		value	writable	enumerable	configurable	get	set
+	Object.getOwnPropertyNames ( オブジェクト ) :Array	プロパティ名をまとめて取得する。（すべて）
+		すべてのプロパティが、検索対象となります。
+	Object.keys ( オブジェクト ) :Array	プロパティ名をまとめて取得する。（列挙可能のみ）
+		検索対象となるのは、列挙可能なプロパティのみ(enumerable:true)です。
+	Object.getOwnPropertySymbols()	シンボルプロパティをまとめて取得する。
+	Object.getPrototypeOf()	オブジェクトのプロトタイプを取得する。
+
+	Object.preventExtensions()	オブジェクトを拡張禁止に設定する。(追加が不可)
+		拡張禁止状態から、通常の状態に戻す事はできません。
+		拡張を禁止すると、プロパティの追加は不可能になります。
+		削除と書込と読取は可能です。
+		オブジェクトの状態	追加	削除	書込	読取
+				通常	○	○	○	○
+			拡張禁止	×	○	○	○
+				封印	×	×	○	○
+				凍結	×	×	×	○
+	Object.seal()	オブジェクトを封印状態に設定する。(追加と削除が不可)
+			封印状態を解除する事はできません。
+	Object.freeze()	オブジェクトを凍結状態に設定する。(追加と削除と書込が不可)
+			凍結状態を解除する事はできません。
+	Object.isExtensible()	拡張可能状態であるか調べる。
+			true が得られた場合、通常のオブジェクトです。
+			false が得られた場合、拡張禁止状態です。
+	Object.isSealed()	封印状態であるか調べる。
+	Object.isFrozen()	凍結状態であるか調べる。
+
+Object クラスのデータ管理について
+	Object オブジェクトは、内部でハッシュテーブルを使った高速化が実現されています。
+	文字列をキーとして指定することで、該当するデータを高速で検索する事ができます。
+
+	辞書に既にデータが存在するか調べる
+		指定したプロパティに、すでにデータが存在するか調べます。
+		配列アクセス演算子を使って、調べたいプロパティにアクセスします。
+		結果が、真であればデータが存在します。偽であればデータは存在しません。
+			var dictionary = new Object();
+			var url = "http://example.com/b.html";
+			if(dictionary[url]){
+				console.log("データは存在する");
+			}else{
+				console.log("データは存在しない");
+			}
+	辞書にデータを登録する		
+		任意のプロパティに、データを登録します。
+			var dictionary = new Object();
+			var page_b = { url:"http://example.com/b.html", title:"タイトルＢ", size:2621 };
+			if(!dictionary[page_b.url]){
+				dictionary[page_b.url] = page_b;
+			}
+	辞書からデータを取得する
+		undefined 値が得られる場合、データは存在しません。
+
+	辞書に登録したデータを削除する
+		delete 文を使って、任意のプロパティを削除します。
+
+参照（リファレンスデータ）について
+
+リファレンス型について
+	すべてのオブジェクトは、リファレンス型に該当します。
+	リファレンス型は、複合的なデータ型です。
+
+	var ary0 = ["a","b","c"];
+	var ary1 = ary0;
+	ary1[0] = "d"; 参照なので、ary0も変わる、ary0[0]がdになります。
+
+不要になったオブジェクト本体を解放する
+	オブジェクト本体を、直接的に消滅させる命令はありません。
+	オブジェクトが不要になった場合、オブジェクトを格納している変数を、別の値で上書きします。
+	基本的には、null 値をセットします。
+	このとき、ガベージコレクションが、自動的に物理メモリから解放します。

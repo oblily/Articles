@@ -1,0 +1,47 @@
+ページの可視性について
+	ページが隠れている状態である場合、省電力化の仕組みが動作します。
+	例えば、アニメーションの更新タイミングが、約 0 ～ 1 fps まで低下します。(普通60fps)
+
+Page Visibility に対応しているか調べる
+	cument.visibilityState が undefined 値以外であるか、厳密比較します。 // IE9以上
+		if(document.visibilityState !== undefined)
+			alert("Page Visibility に対応している");
+
+ページの可視状態を取得する
+	hidden		Boolean	ドキュメントが隠れている場合 true が得られる。（読み取り専用）
+	visibilityState	String	ドキュメントの可視ステート情報を取得する。（読み取り専用）
+
+	可視ステート情報について
+		"visible"	○	ドキュメントがモニタ上で目視可能な状態。
+		"hidden"	×	ドキュメントが完全に隠れている状態。
+		"prerender"	×	事前レンダリングされてから、可視に変化していない状態。（実装は任意）
+		"unloaded"	×	ドキュメントが、アンロードされた状態。（実装は任意）
+		ページの可視ステート状態を取得する
+		// 1 fpsの時間隔で関数を実行する
+		setInterval(function() {
+			// 可視状態を取得する
+			var visibility_hidden = document.hidden;
+			// 可視ステート情報を取得する
+			var visibility_state = document.visibilityState;
+
+			// 出力テスト
+			console.log(visibility_hidden);
+			console.log(visibility_state);
+
+		} , 1000);
+
+ページの可視状態の変化を監視する
+	ページの可視状態の変化を監視するには、visibilitychange イベントを使用します。
+
+
+
+
+
+
+
+
+
+
+
+
+

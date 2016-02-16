@@ -1,0 +1,41 @@
+Launch VS Code:
+	Console: ①Code . (Notice:this is a sapce between code and dot)
+		 ②Code
+Close VS Code:
+	Shift + Ctrl + W
+
+Command palette:
+	Ctrl + P : input mode
+	Shift + Ctrl + P: input mode with >
+
+Cursor Command:
+	カーソルを1語左		［Ctrl］＋［←］
+	カーソルを1語右		［Ctrl］＋［→］
+	カーソルを行頭		［Home］
+	カーソルを行末		［End］
+	カーソルをファイル先頭	［Ctrl］＋［Home］
+	カーソルをファイル末尾	［Ctrl］＋［End］
+
+マルチカーソル
+	現在のカーソル位置にある単語と同じ単語全てを［Ctrl］＋［F2］キーで同時に選択した場合に、
+	［Shift］＋［Ctrl］＋［L］キーでそれらにカーソルを付加できる
+
+User Settings/Workspace Settings
+	ユーザー設定はユーザーごとに個別の設定で、VS Codeで共通に使われる。
+	ワークスペース設定はオープンしたフォルダーごとに固有の設定となる
+	ワークスペース設定を行った場合、ユーザー設定に同じ設定項目があると、それがワークスペース設定で上書きされる点には注意しよう。
+
+	// Controls the font family.
+	"editor.fontFamily": "",
+
+	// Controls the font size.
+	"editor.fontSize": 0,
+
+	// Controls visibility of line numbers
+	"editor.lineNumbers": true,
+
+	// Controls the rendering size of tabs in characters. 
+	// Accepted values: "auto", 2, 4, 6, etc. If set to "auto", the value will be guessed when a file is opened.
+	"editor.tabSize": "auto",
+
+

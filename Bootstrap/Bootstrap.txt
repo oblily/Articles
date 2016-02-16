@@ -1,0 +1,169 @@
+Bootstrap
+
+参考サイト：http://www.tohoho-web.com/ex/bootstrap.html
+
+はじめに
+    1: Bootstrap とは
+	Bootstrap は、スマートフォンなどのモバイル端末にも対応し、レスポンシブデザインを採用した HTML, CSS, JavaScript フレームワークです。
+    
+    2: レベルの画面サイズ
+	Extra small(xs)  スマートフォンなど   768px未満
+	Small      (sm)  タブレット           768～991px
+	Medium     (md)  中型ディスプレイ     992～1199px
+	Large      (lg)  大型ディスプレイ     1200px以上
+
+    3: 基本テンプレート
+	<head>
+	  <!-- IE=edge は、IE の互換表示を抑止し、常に標準モードで表示させるための記述です。-->
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	  <!-- スマートフォンなど小サイズ設備で、フォントが小さくすぎないように -->
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	  <!-- html5shiv.js は、IE8 などで HTML5 のタグを使用するためのライブラリです。 -->
+	  <!-- respond.js は、IE6～IE8 で max-width, min-width などの CSS を模倣するためのライブラリです。 -->
+	  <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+          <![endif]-->
+	</head>
+
+コンテナ (コンテナはページの基本シートとなる要素で、Bootstrap の各要素をコンテナの中に記述します。)
+    1: 固定的コンテナ
+	container は固定的コンテナを生成します。
+		スマートフォンサイズ(768px未満)の場合は全幅
+		タブレットサイズ(768～991px)の場合は 750px固定
+		中型ディスプレイ(992～1199px)の場合は 970px固定
+		大型ディスプレイ(1200px以上)の場合は 1170px 固定
+		コンテナはセンタリングされます
+		左右には 15px のパディングが付きます
+
+	例：	<div class="container bg-info">
+			container
+		</div>
+
+    2: 流動的コンテナ
+	container-fluid は流動的コンテナを生成します。ウィンドウの横幅に応じてスムーズに横幅が変動します
+
+	例：	<div class="container-fluid bg-info">
+			container-fluid
+		</div>
+
+グリッドシステム
+    1: グリッド
+	コンテナを12個のグリッドに分割してレイアウトを制御
+	カラムの合計が 12 を超える場合は複数行で表示されます。
+
+	例：下記では 2:6:2:2(合計12) の割合でコンテナを分割しています。
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-xs-2 bg-info">col-xs-2</div>
+		    <div class="col-xs-6 bg-success">col-xs-6</div>
+		    <div class="col-xs-2 bg-warning">col-xs-2</div>
+		    <div class="col-xs-2 bg-danger">col-xs-2</div>
+		  </div>
+		</div>
+
+    2: マルチデバイス対応
+	col-xs-* を使用した場合、カラムは常に横に並びます。
+	col-sm-* を使用すると、タブレットサイズ(768px)以上の画面では横並び、それ未満では縦並びになります。
+	col-md-* を使用すると、中型ディスプレイサイズ(992px)以上で横並び、それ未満で縦並びになります。
+	col-lg-* を使用すると、大型ディスプレイサイズ(1200px)以上で横並び、それ未満で縦並びになります。
+
+	例：下記の例では、スマートフォンサイズでは 3:3:3:3、タブレットサイズでは 6:2:2:2、中型ディスプレイでは 2:2:2:6 の割合で分割します。
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-xs-3 col-sm-6 col-md-2 bg-info my-media-1"> </div>
+		    <div class="col-xs-3 col-sm-2 col-md-2 bg-success my-media-2"> </div>
+		    <div class="col-xs-3 col-sm-2 col-md-2 bg-warning my-media-3"> </div>
+		    <div class="col-xs-3 col-sm-2 col-md-6 bg-danger my-media-4"> </div>	
+		  </div>
+		</div>
+
+    3: オフセット
+	col-*-offset-* を指定することにより、カラムとカラムの間に隙間を開けることができます。
+
+	例：下記の例では、5カラムと 6カラムの間に 1カラムの隙間を開けています。
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-xs-5 bg-info">col-xs-5</div>
+		    <div class="col-xs-offset-1 col-xs-6 bg-success">col-xs-6</div>	
+		  </div>
+		</div>
+
+    4: 入れ子
+	グリッドを入れ子にすることも可能です。この場合、row > col > row > col... の様に入れ子していきます。
+
+	例：二列、各列に二行　(col-xs-6/col-xs-3+col-xs-9) + (col-xs-6/col-xs-3+col-xs-9)
+		<div class="container-fluid">
+		    <div class="col-xs-6 bg-danger">
+		      col-xs-6
+		      <div class="row">
+		        <div class="col-xs-3 bg-info">col-xs-3</div>
+		        <div class="col-xs-9 bg-success">col-xs-9</div>
+		      </div>
+		    </div>
+		    <div class="col-xs-6 bg-warning">
+		      col-xs-6
+		      <div class="row">
+		        <div class="col-xs-3 bg-info">col-xs-3</div>
+		        <div class="col-xs-9 bg-success">col-xs-9</div>
+		      </div>
+		    </div>
+		</div>
+
+    5: カラム順序
+	col-*-push-* はカラムを右方向に、col-*-pull-* はカラムを左方向にシフトします。
+
+	例：3 + 2 + 1 + 4
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-xs-2 col-xs-push-4 bg-danger">1</div>
+		    <div class="col-xs-2 bg-info">2</div>	
+		    <div class="col-xs-2 col-xs-pull-4 bg-success">3</div>
+		    <div class="col-xs-2 bg-warning">4</div>	
+		  </div>
+		</div>
+
+タイポグラフィ
+    1: ヘッダ
+	ヘッダには <h1>～<h6> を使用します。.h1～.h6 のクラスも使用できます。<small> で副題をつけることもできます。
+
+	例：下記では 2:6:2:2(合計12) の割合でコンテナを分割しています。
+		<h1>H1 Bootstrap入門 <small>Secondary text</small></h1>
+		<h2>H2 Bootstrap入門 <small>Secondary text</small></h2>
+
+    2: 本文・リード
+	本文には <p> を用います。.lead は記事のリード(要旨)を示します。
+
+	例：<p class="lead">Bootstrap 入門へようこそ</p>
+	    <p>Bootstrap は・・・</p>
+
+    3: インラインテキスト要素
+	 <mark>,	重要なテキスト 
+	 <del>, 	削除されたテキスト
+	 <s>,		取り消されたテキスト
+ 	 <ins>,		挿入されたテキスト
+	 <u>,		下線付き 
+	 <small>,	小さなテキスト
+	 <strong>,	強調されたテキスト
+	 <em> 		emphasis(強調された) text
+
+    4: アライメント
+	 .text-left, .text-center, .text-right, .text-justify 両端揃えテキスト, .text-nowrap 改行禁止テキスト
+
+    5: トランスフォーメーション
+	.text-lowercase はテキスト全体を小文字に、.text-uppercase はテキスト全体を大文字に、
+	.text-capitalize は各単語の先頭文字を大文字に変換して表示します。
+
+    6: 略語
+	<abbr> は略語を示します。title="..." を指定すると略語が点線の下線付きで表示され、マウスを乗せると説明が表示されます。
+
+
+
+
+
+
+
+
+    

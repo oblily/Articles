@@ -1,0 +1,52 @@
+ドキュメントから Window オブジェクトを取得する
+	document.defaultView プロパティを使用します。
+
+現在のページのドメインを取得する
+	生成元（オリジン）について---origin
+		生成元（オリジン）とは、自身のリソースが格納されている場所です。
+		「プロトコル、ドメイン、ポート番号」の３つを合わせたものです。
+	現在のページのドメインを取得する
+		var domain = document.domain;
+
+現在閲覧中のページの URL アドレスを取得する
+	var url = document.URL;
+
+現在閲覧中のページの読み込み状況を取得する
+	document.readyState プロパティを使用します。
+		"uninitialized"	初期化されていません。ロードが開始されていません。
+				一部のブラウザでは、空のウィンドウを作成した直後などに該当します。
+		"loading"	ロード中です。DOM ツリーの構築中です。
+				<SCRIPT> 要素を使ってインラインな JavaScript を実行している場合などに該当します。
+				自身の <SCRIPT> タグより以前に存在するタグは、DOM オブジェクト構築済みです。
+				自身の <SCRIPT> タグより以降に存在するタグは、DOM オブジェクト未構築です。
+		"interactive"	DOM ツリーの構築は完了しています。画像データなどの読み込みはまだ完了していません。
+		"complete"	すべての読み込みが完了しています。
+読み込み状況が変化したか監視する	
+	onreadystatechange イベントを使用します。
+
+DOM ツリーの構築が完了したか監視する
+	DOMContentLoaded イベントを使用します。
+	if(document.addEventListener){
+		document.addEventListener("DOMContentLoaded" , DocumentReadyStateInteractiveFunc);
+	}
+
+ページの読み込みがすべて完了したか監視する
+	onload イベントを使用します。
+	readyState が、"complete" へ切り替わるタイミングに相当します。
+
+リファラ情報を取得する
+	リファラ情報を取得する
+		リファラとは、現在のページから１つ前である「リンク元のページ」の情報です。
+		document.referrer プロパティを使用します。
+
+クライアント領域のサイズを取得する
+	document_obj.body.clientWidth //スクロールバーのサイズは、結果に含まれません。
+
+
+
+
+
+
+
+
+

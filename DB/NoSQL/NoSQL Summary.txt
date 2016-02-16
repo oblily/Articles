@@ -1,0 +1,21 @@
+NoSQL Summary
+
+Where to use NoSQL
+	IoT, Game
+
+Compare with RDB
+								NoSQL				RDB
+	schema 						schema-less			Define
+	Language					Diff				SQL			
+	Data Model					Diff				Relational
+	Availability				Replication			Fail Over
+	Scalability					Scale-Out			Scale-Up
+	Linear scale				Easy				Hard
+	Consistency					BASE				ACID
+	Mount of Data cost			Cheap				Expensive
+	Integrity					Result				Always
+	Development techniques		Dev and DB at the 	First DB ater Dev
+								same time
+	Develop						Agile				WaterFall
+	
+	

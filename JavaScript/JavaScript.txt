@@ -1,0 +1,235 @@
+												
+what JavaScript can do.												
+	JavaScript Can Change HTML Content											
+		document.getElementById("demo").innerHTML = "Hello JavaScript";										
+	JavaScript Can Change HTML Attributes											
+	JavaScript Can Change HTML Styles (CSS)											
+		document.getElementById("demo").style.fontSize = "25px";										
+	JavaScript Can Validate Data											
+		document.getElementById("numb").value										
+												
+JavaScript can be placed in the <body> and the <head> sections of an HTML page.												
+	It is a good idea to place scripts at the bottom of the <body> element.											
+	This can improve page load, because HTML display is not blocked by scripts loading.											
+												
+JavaScript Display Possibilities												
+	JavaScript can "display" data in different ways:											
+		Writing into an alert box, using window.alert().										
+		Writing into the HTML output using document.write().										
+			Using document.write() after an HTML document is fully loaded, will delete all existing HTML:									
+		Writing into an HTML element, using innerHTML.										
+		Writing into the browser console, using console.log().										
+												
+JavaScript Statements												
+	JavaScript Values											
+		Fixed values are called literals. Variable values are called variables.										
+	JavaScript Operators											
+		JavaScript uses an assignment operator ( = ) to assign values to variables:										
+		JavaScript uses arithmetic operators ( + - *  / ) to compute values:										
+	JavaScript Comments											
+		Code after double slashes // or between /* and */ is treated as a comment.										
+												
+JavaScript is Case Sensitive												
+	The variables lastName and lastname, are two different variables.											
+												
+JavaScript Numbers												
+	JavaScript has only one type of numbers.											
+	Numbers can be written with, or without decimals:											
+												
+	’F	Integers (numbers without a period or exponent notation) are considered accurate up to 15 digits.										
+			var x = 999999999999999;   // x will be 999999999999999									
+			var y = 9999999999999999;  // y will be 10000000000000000									
+		The maximum number of decimals is 17, but floating point arithmetic is not always 100% accurate:										
+			var x = 0.2 + 0.1;         // x will be 0.30000000000000004									
+		To solve the problem above, it helps to multiply and divide:										
+			var x = (0.2 * 10 + 0.1 * 10) / 10;       // x will be 0.3									
+		Division by 0 (zero) also generates Infinity:										
+			var x =  2 / 0;          // x will be Infinity									
+			var y = -2 / 0;          // y will be -Infinity									
+		Infinity is a number: typeOf Infinity returns number.										
+			typeof Infinity;        // returns "number"									
+		var x = 100 / "Apple";  // x will be NaN (Not a Number)						isNaN(x);               // returns true because x is Not a Number				
+		However, if the string contains a numeric value , the result will be a number:										
+			var x = 100 / "10";     // x will be 10									
+		Using myNumber.MAX_VALUE, where myNumber is a variable, expression, or value, will return undefined:										
+			var x = 6;									
+			var y = x.MAX_VALUE;    // y becomes undefined									
+												
+												
+												
+												
+												
+												
+JavaScript Arrays												
+	JavaScript arrays are written with square brackets.											
+		var cars = ["Saab", "Volvo", "BMW"];										
+												
+JavaScript Objects												
+	JavaScript objects are written with curly braces.											
+		var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};										
+												
+Undefined												
+	In JavaScript, a variable without a value, has the value undefined. The typeof is also undefined.											
+		var person;                  // Value is undefined, type is undefined										
+		var person = null;           // Value is null, but type is still an object										
+		var person = undefined;     // Value is undefined, type is undefined										
+		null === undefined           // false										
+		null == undefined            // true										
+												
+Automatically Global												
+	If you assign a value to a variable that has not been declared, it will automatically become a GLOBAL variable.											
+	function myFunction() {											
+		carName = "Volvo";										
+	}	even if it is executed inside a function										
+												
+JavaScript Data Types												
+	In JavaScript there are 5 different data types that can contain values:											
+		string										
+		number										
+		boolean										
+		object										
+		function										
+	There are 3 types of objects:											
+		Object										
+		Date		You cannot use typeof to determine if a JavaScript object is an array (or a date).								
+		Array		function isArray(myArray) {							function isDate(myDate) {	
+					return myArray.constructor.toString().indexOf("Array") > -1;							return myDate.constructor.toString().indexOf("Date") > -1;
+				}							}	
+												
+	And 2 data types that cannot contain values:											
+		null										
+		undefined										
+												
+The Unary + Operator												
+	The unary + operator can be used to convert a variable to a number:											
+		var y = "5";      // y is a string										
+		var x = + y;      // x is a number										
+												
+		var y = "John";   // y is a string										
+		var x = + y;      // x is a number (NaN)										
+												
+												
+JavaScript Best Practices												
+	Avoid global variables,  avoid new,  avoid  ==,  avoid eval()											
+	Always Declare Local Variables											
+		Local variables must be declared with the var keyword, otherwise they will become global variables.										
+	Declarations on Top											
+		By default, JavaScript moves all declarations to the top (JavaScript hoisting).										
+	Initialize Variables											
+	Never Declare Number, String, or Boolean Objects											
+		Always treat numbers, strings, or booleans as primitive values. Not as objects.										
+	Don't Use new Object()											
+		Use {} instead of new Object()				var x1 = {};           // new object						
+		Use "" instead of new String()				var x2 = "";           // new primitive string						
+		Use 0 instead of new Number()				var x3 = 0;            // new primitive number						
+		Use false instead of new Boolean()				var x4 = false;        // new primitive boolean						
+		Use [] instead of new Array()				var x5 = [];           // new array object						
+		Use /()/ instead of new RegExp()				var x6 = /()/;         // new regexp object						
+		Use function (){} instead of new function()				var x7 = function(){}; // new function object						
+	Beware of Automatic Type Conversions											
+		Beware that numbers can accidentally be converted to strings or NaN (Not a Number).										
+			var x = "Hello";     // typeof x is a string									
+			x = 5;               // changes typeof x to a number									
+		Subtracting a string from a string, does not generate an error but returns NaN (Not a Number):										
+			"Hello" - "Dolly"    // returns NaN									
+	Use === Comparison											
+		The == comparison operator always converts (to matching types) before comparison.										
+			0 == "";        // true									
+			1 == "1";       // true									
+			1 == true;      // true									
+	Use Parameter Defaults											
+		If a function is called with a missing argument, the value of the missing argument is set to undefined.										
+	End Your Switches with Defaults											
+	Avoid Using eval()											
+	Undefined is Not Null											
+		With JavaScript, null is for objects, undefined is for variables, properties, and methods.										
+		If you want to test if an object exists, this will throw an error if the object is undefined:										
+			if (myObj !== null && typeof myObj !== "undefined") 									
+		Because of this, you must test typeof() first:										
+			if (typeof myObj !== "undefined" && myObj !== null) 									
+												
+JavaScript Performance												
+	How to speed up your JavaScript code.											
+												
+	Reduce Activity in Loops											
+		Bad Code:	for (i = 0; i < arr.length; i++) {									
+		Better Code:		l = arr.length;								
+				for (i = 0; i < l; i++) {								
+	Reduce DOM Access											
+		Accessing the HTML DOM is very slow, compared to other JavaScript statements.										
+		If you expect to access a DOM element several times, access it once, and use it as a local variable:										
+			obj = document.getElementById("demo");									
+			obj.innerHTML = "Hello";									
+	Reduce DOM Size											
+		Keep the number of elements in the HTML DOM small.										
+	Avoid Unnecessary Variables											
+		Bad:	var fullName = firstName + " " + lastName;									
+			document.getElementById("demo").innerHTML = fullName;									
+		Good:	document.getElementById("demo").innerHTML = firstName + " " + lastName									
+	Delay JavaScript Loading											
+		Putting your scripts at the bottom of the page body, lets the browser load the page first.										
+												
+Function Hoisting												
+	Hoisting is JavaScript's default behavior of moving declarations to the top of the current scope.											
+	Hoisting applies to variable declarations and to function declarations.											
+	Because of this, JavaScript functions can be called before they are declared:											
+		myFunction(5);										
+		function myFunction(y) {										
+			return y * y;									
+		}										
+	Functions defined using an expression are not hoisted.											
+												
+Self-Invoking Functions												
+	A self-invoking expression is invoked (started) automatically, without being called.											
+	Function expressions will execute automatically if the expression is followed by ().											
+	You cannot self-invoke a function declaration.					The self-invoking function only runs once. 						
+		(function () {										
+			var x = "Hello!!";      // I will invoke myself									
+		})();										
+												
+	A JavaScript function does not perform any checking on parameter values (arguments).											
+												
+Parameter Rules												
+	JavaScript function definitions do not specify data types for parameters.											
+	JavaScript functions do not perform type checking on the passed arguments.											
+	JavaScript functions do not check the number of arguments received.											
+												
+Parameter Defaults												
+	If a function is called with missing arguments (less than declared), the missing values are set to: undefined											
+	If a function is called with too many arguments (more than declared), these arguments can be reached using the arguments object.											
+												
+Invoking a Function with a Function Method												
+	call() and apply() are predefined JavaScript function methods. Both methods can be used to invoke a function, and both methods must have the owner object as first parameter.											
+		function myFunction(a, b) {										
+			return a * b;									
+		}										
+		myObject = myFunction.call(myObject, 10, 2);     // Will return 20										
+		myArray = [10, 2];										
+		myObject = myFunction.apply(myObject, myArray);  // Will also return 20										
+												
+		The only difference is that call() takes the function arguments separately, and apply() takes the function arguments in an array.										
+												
+Global Variables												
+	In a web page, global variables belong to the window object.											
+	Global variables can be used (and changed) by all scripts in the page (and in the window).											
+	Variables created without the keyword var, are always global, even if they are created inside a function.											
+												
+JavaScript Closures												
+	var add = (function () {											
+	    var counter = 0;											
+	    return function () {return counter += 1;}											
+	})();											
+												
+	add();											
+	add();											
+	add();											
+												
+	// the counter is now 3											
+												
+	The variable add is assigned the return value of a self-invoking function.											
+												
+	The self-invoking function only runs once. It sets the counter to zero (0), and returns a function expression.											
+												
+	This way add becomes a function. The "wonderful" part is that it can access the counter in the parent scope.											
+												
+	This is called a JavaScript closure. It makes it possible for a function to have "private" variables.											

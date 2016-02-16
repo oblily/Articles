@@ -1,0 +1,15 @@
+Adding an existing project to GitHub using the command line
+
+1: Create a new repository on GitHub ( for example: MyRepo)
+2: Initialize the local directory as a Git repository
+	cd MyRepo
+	git init 
+3: Add the files to your new local repository
+	git add
+4: Commit the files that you've staged in your local repository
+	git commit -m "This is procedure manual to add exist project to remote GitHub using cmd"
+5: add the URL for the remote repository where your local repository will be pushed
+	git remote add origin [remote repository URL]
+	git remote -v
+6: Push the changes in your local repository to GitHub
+	git push origin master

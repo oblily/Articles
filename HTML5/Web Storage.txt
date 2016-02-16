@@ -1,0 +1,136 @@
+WebStorage:
+
+WebStorageの読み書き可能範囲
+	ウェブストレージに保存したデータは、どこからでも読み出せるわけではありません。
+		「プロトコル」、「ドメイン」、「ポート」の3条件が合致しているウェブページ間でのみ共有されます。
+		1つでも異なっていれば、読み出せません。
+
+SessionStorageとLocalStorageの違い
+
+SessionStorageへ持っている値は、ウィンドウを閉じるまで有効となります。また別タブや別ウィンドウ間での共有はしていません。
+LocalStorageへ持っている値は、ウィンドウを閉じたあとでも有効となっています。
+	Cookieのように有効期限はありません。別タブや別ウィンドウ間での共有はできます。
+
+Cookieとの比較
+
+	WebStorageは無条件に参照できてしまうということはなく、
+	「プロトコル://ドメイン名:ポート番号」（W3Cではoriginと表記されています）が同じサイト内でしか参照することはできません。
+
+
+			参照範囲		保存容量		有効期間
+	Cookie		domain,path単位		4KB			期間指定
+	sessionStorage	ウインドウ,origin単位	5MB/origin※2,3		ブラウザの終了/タブを閉じるまで
+	localStorage	origin単位		5MB/origin※2,3		永続的
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+**************************************************************************************************
+**************************************************************************************************
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+LocalStorage:
+
+LocalStorageとは
+	javascriptを用いてクライアント側にデータを保存する仕組みです。
+	半永久的にデータを保持することができます。
+	ブラウザを終了してもデータが消えることはありません。次回起動時や別ウインドウからでも同じデータを参照することができます。
+	有効利用：
+		フォームの値とかはLocalStorageへセットするとことで、戻るボタン問題も２窓問題も解決できる
+		LocalStorageは、意図的に削除しなければ消えないことから、
+			個の追跡やオンラインから切り離してオフラインで操作する場合の保存先などに便利です。
+
+クッキーとの違い
+	クッキーはフロントでもバックエンドでも利用でき、使い勝手が良いのですがサーバとの通信の度にデータが送信されるため、
+		僅かに通信のリソースを使用することになります。
+	クッキーの特徴
+		保存容量が最大4KB
+		リクエストの度にサーバへ値を送信
+		任意に有効期限を決められる
+	LocalStorageの特徴
+		保存容量はブラウザにより異なる(5MB～10MB)
+		サーバへ値を送信しない
+		無期限
+		**Amazonの「最近見た商品」などでこの機能が利用されているのは有名な話ですね。**
+LocalStorageの使い方
+	ブラウザの対応チェック
+		IEは8以降であれば使用できます。
+		if(('localStorage' in window) && (window.localStorage !== null)) {
+    		    // ローカルストレージが使える
+		} else {
+		    // 使えない。。。
+		}
+	LocalStorageへデータを保存する		
+		localStorage.setItem('access_count', 1);
+		window.localStorage.setItem('access_count', 1);
+		localStorage.access_count = 1;
+	LocalStorageからデータを取得する
+		num = localStorage.getItem('access_count');
+		num = window.localStorage.getItem('access_count');
+		num = localStorage.access_count
+	LocalStorageからデータを削除する
+		localStorage.removeItem('access_count');
+		window.localStorage.removeItem('access_count');
+	LocalStorageの初期化(すべて項目クリア)
+		localStorage.clear();
+		window.localStorage.clear();
+	
+	使用例：ウィンドウ間情報共有できるので、画面アンロード時データ消す
+		いつまでも残るので unload または beforeunload で消す
+		window.onbeforeunload = function () {
+			sessionStorage.removeItem('IsDoubleLaunch'); };
+	
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+**************************************************************************************************
+**************************************************************************************************
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+
+SessionStorage
+
+SessionStorageはウィンドウやタブを閉じるまでしか保持できません。
+SessionStorageは、テンポラリ的な使い方に向いています。例えば、ショッピングカードやページ送りがある一覧画面など。
+
+SessionStorageの使い方
+	ブラウザの対応チェック
+		IEは8以降であれば使用できます。
+		if(('sessionStorage' in window) && (window.sessionStorage !== null)) {
+    		    // ローカルストレージが使える
+		} else {
+		    // 使えない。。。
+		}
+	SessionStorageへデータを保存する
+		var num = 1;		
+		sessionStorage.setItem('access_count', num);
+		window.sessionStorage.setItem('access_count', num);
+		sessionStorage.access_count = num;
+	SessionStorageからデータを取得する
+		num = sessionStorage.getItem('access_count');
+		num = window.sessionStorage.getItem('access_count');
+		num = sessionStorage.access_count
+	SessionStorageからデータを削除する
+		sessionStorage.removeItem('access_count');
+		window.sessionStorage.removeItem('access_count');
+	SessionStorageの初期化(すべて項目クリア)
+		sessionStorage.clear();
+		window.sessionStorage.clear();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		

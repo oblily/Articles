@@ -1,0 +1,97 @@
+ArrayBuffer クラスについて（バッファ）
+	ArrayBuffer クラスを使用すると、バイナリデータを取り扱う事ができます。
+	ArrayBuffer クラスを使用すると、物理メモリの領域（バッファ）を確保する事ができます。
+	ArrayBuffer クラスだけでは、バッファに入出力アクセスする事はできません。
+	バッファに入出力アクセスするには、別途 ArrayBufferView（ビュー） のサブクラスを使用する必要があります。
+ArrayBufferView クラスについて（ビュー）
+	ビューには、大きく分けて TypedArray と DataView の２つの種類があります。
+
+	TypedArray クラスについて （型付き配列）
+		高速でバッファに入出力アクセスするには、TypedArray クラスを使用します。
+		TypedArray オブジェクトのすべての番地には、同じ型（バイトサイズ）のデータを格納する事ができます。
+		TypedArray クラスには、配列の挿入や切除といった便利なメソッドは存在しません。
+		TypedArray オブジェクト作成後に、配列のサイズを継ぎ足し補充する事はできません。
+		低機能ですが、かわりに各要素に高速でアクセスする事ができます。
+		
+		TypedArray のサブクラスについて
+			TypedArray のサブクラスの一覧
+				Int8Array	1	8bit整数（符号あり）
+				Uint8Array	1	8bit整数（符号なし）
+				Uint8ClampedArray	1	8bit整数（符号なし）（クランプあり）
+				Int16Array	2	16bit整数（符号あり）
+				Uint16Array	2	16bit整数（符号なし）
+				Int32Array	4	32bit整数（符号あり）
+				Uint32Array	4	32bit整数（符号なし）
+				Float32Array	4	32bit浮動小数点数
+				Float64Array	8	64bit浮動小数点数
+				
+				要素のサイズより大きい値を使って、書き込みを試みた場合、クランプの有無によって結果が異なります。
+				クランプが無い場合、要素のサイズ内に収まる、下位ビットのみが書き込まれます。
+				クランプが有る場合、要素のサイズ内で表現できる、最小と最大の範囲内に収められます。			
+
+		TypedArray に対応しているか調べる //IE9以上
+			ブラウザが、ArrayBuffer に対応しているのであれば、TypedArray にも対応しています。
+			ブラウザが、ArrayBuffer に対応しているか調べるには、window.ArrayBuffer が真であるか比較します。
+
+		TypedArray オブジェクトを作成する (新規にバッファを生成する)
+			new 演算子を使って、TypedArray のサブクラスをインスタンス化します。
+			new TypedArray ( 配列の個数 ) :TypedArray
+				第01引数(略可)	Number	確保したいバッファのサイズを配列の個数で指定。デフォルトでは 0。
+				これは、仮想的な数値ではありません。実際に物理メモリの確保を試みます。
+				物理メモリの確保に失敗した場合、エラーが発生します。
+				物理メモリの確保に成功した場合、バイナリの中身は、すべて 0 で初期化されています。
+				TypedArray オブジェクトを生成した後で、バッファのサイズを変更する事はできません。
+				この作成方法を利用すると、内部で ArrayBuffer オブジェクトも生成されます。
+					var ary_u8 = new Uint8Array(128);// 配列の個数を指定して、Uint8Array オブジェクトを作成する
+					var ary_buffer = ary_u8.buffer;	// ビューから、ArrayBuffer オブジェクトを取得する		
+					// 確保した総バイト数
+					console.log(ary_buffer.byteLength); // 128 (1 * 128)
+
+		TypedArray オブジェクトを作成する (初期データを指定しつつ新規にバッファを生成する)
+			new TypedArray ( [格納したいデータ] ) :TypedArray
+				第01引数	*	まとめて格納したいデータを指定する。
+							「Array オブジェクト」や「TypedArray オブジェクト」の指定が可能。
+							指定した要素の数が、そのままバッファのサイズ（要素の個数）となる。
+				生成に失敗した場合、エラーが発生します。
+				TypedArray オブジェクトを生成した後で、バッファのサイズを変更する事はできません。
+					var ary_s8 = new Int8Array( [9,8,7,6,5,4,3,2,1,0] );
+					var ary_buffer = ary_s8.buffer;
+					console.log(ary_s8); // [9,8,7,6,5,4,3,2,1,0]
+					var v0 = ary_u8[0];
+					配列のサイズ（個数）を取得するには、length プロパティを使用します。
+					var num = ary_s8.length;
+					for (key in ary_s32) --->console.log("data:"  + ary_s32[key]);
+エンディアンとは？
+	エンディアンとは、メモリの配置の方式です。
+	ビッグエンディアンとリトルエンディアンの２通りの方式があります。
+		ビッグエンディアン方式は、上位バイトからデータが格納されます。
+		リトルエンディアン方式は、下位バイトからデータが格納されます。
+	CPU ごとに、エンディアン方式が決まっています。
+		例えば、インテルの x86系 CPU は、リトルエンディアン方式です。
+	TypedArray クラスのエンディアン方式について
+		JavaScript を動作させている CPU 環境と同じエンディアン方式で動作します。この仕様は要注意です。
+	リトルエンディアン方式で動作しているか調べる関数
+		if((new Uint8Array((new Uint16Array([0x00ff])).buffer))[0]) return true;
+		return false;	
+
+DataView クラスについて
+	より高機能なメソッドを使って、バッファに入出力アクセスするには、DataView クラスを使用します。
+
+ArrayBuffer に対応しているか調べる
+	ブラウザが、ArrayBuffer に対応しているか調べるには、window.ArrayBuffer が真であるか比較します。 //IE9以上
+
+ArrayBuffer オブジェクトを作成する（ArrayBuffer コンストラクタ）
+	new ArrayBuffer ( バイトサイズ ) :ArrayBuffer
+		物理メモリの確保に失敗した場合、エラーが発生します。
+		物理メモリの確保に成功した場合、バイナリの中身は、すべて 0 で初期化されています。
+		ArrayBuffer オブジェクトを生成した後で、バッファのサイズを変更する事はできません。
+
+
+
+
+
+
+
+
+
+

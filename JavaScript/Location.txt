@@ -1,0 +1,46 @@
+ロケーションについて
+	ロケーションは、URL アドレスに関する情報がまとまっています。
+	var location_obj = window.location;
+
+ロケーションのプロパティ一覧
+	href		String	ページの URL アドレスを設定する
+	protocol	String	「現在のページの URL」から「プロトコル」を取得する。
+	host		String	「現在のページの URL」から「ホスト名」 + 「ポート番号」を取得する。
+	hostname	String	「現在のページの URL」から「ホスト名」を取得する。
+	port		String	「現在のページの URL」から「ポート番号」を取得する。
+	pathname	String	「現在のページの URL」から「パス名」を取得する
+	search		String	「現在のページの URL」から「クエリ」を取得する。
+	hash		String	「現在のページの URL」から「フラグメント識別子」を取得する。
+
+現在のページをリロードする
+
+	Location.reload( 強制取得を試みるか？ ) :Void
+		第01引数(略可)	Boolean	true の場合、サーバーから読み込みを試みる。
+					false の場合、キャッシュから読み込みを試みる。（デフォルトは false）
+
+URL を指定してページを遷移する
+
+	location_obj.assign("http://google.com/");
+	また
+	location_obj.href = "http://google.com/";
+
+
+URL を指定して、ページを遷移する（現在のセッション履歴を上書きする）
+	このメソッドを使用すると、元のページに戻ることはできません。
+	Location.replace( "URL" ) :Void
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
