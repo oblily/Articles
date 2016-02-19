@@ -1,0 +1,279 @@
+WebApi:
+1:よくある問題として、POSTとPUTの使い分けが分からないといったことがある。その場合は、クライアント側でURLを指定できるかどうか、を判断基準にするとよいだろう。クライアント側でURLが決められる場合（対象のリソースをURLで表せる場合）は、PUTを選択し、そうでなければPOSTを選択する。
+
+
+2-3 HTTPリクエストを取得する
+http://www.atmarkit.co.jp/ait/articles/1311/06/news070_2.html
+
+主に２種類方式がある
+１：引数定義
+２：それはAPIコントローラ・クラスの基底クラスであるApiControllerのRequestプロパティ（HttpRequestMessageクラス）を参照することだ。
+
+このHTTPリクエストの値を引数に代入する仕組みのことを、モデル・バインド、代入することをバインドと呼称する。
+
+１：引数定義
+○ URLのクエリ文字列を取得する
+
+
+引数の型は、プリミティブ型（参照：Type.IsPrimitive プロパティ）である必要がある：
+制限
+	A:クエリ文字列を取得するには、クエリ文字列の名前と同じ名前である引数を、アクション・メソッドに定義する。（大文字、小文字区別しない）、なければ、エラー返す
+応用
+	①：URL:「~/api/cusomers/?category=name&number=1」
+	メソッド：public string Get(string category, int number) { return category + number; }
+	⇒　name1
+        ②：URL:「~/api/cusomers/?category=name&number2=7」
+	メソッド：public string Get(string category, int number) { return category + number; }
+	⇒　No HTTP resource was found that matches the request URI 'http://localhost:63361/api/product?Category=name&number2=7'.
+
+復合データ型（独自クラス）を定義したい場合は、：
+制限B
+	MyParameterクラスの各プロパティの名前は、クエリ文字列の名前と同じにする必要がある（アクション・メソッドの引数の名前は何でもよい、orelse　対応しないプロパティの値が取れないなので、empty stringを返す場合がある。　
+	属性クラスFromUriAttribute（System.Web.Http名前空間）を付与する。
+
+応用
+	①：URL:「~/api/product?Category=name&number=7」
+メソッド：
+public class MyParemeter
+{
+  public string Category { get; set; }
+  public string Number { get; set; }
+}
+
+public class CustomersController : ApiController
+{
+  public string Get([FromUri]MyParemeter parameter) { return testpram.Category + testpram.Number + testpram.Number; }
+}
+⇒　name77
+	①：URL:「~/api/product?Category=name&number2=8」
+	メソッド：同上
+	⇒　name
+
+○ URLの一部の値を取得する
+制限
+	注意点は、ルーティングの設定で指定しているパラメータの名前（リスト4の「{country}」や「{prefecture}」の部分）と、アクション・メソッドの引数の名前を同じにすることである。上記と同じｍ複合でもOK
+応用
+	①：URL:「~/api/address/japan/tokyo」
+public static class WebApiConfig
+{
+  public static void Register(HttpConfiguration config)
+  {
+    config.Routes.MapHttpRoute(
+      name: "AddressApi",
+      routeTemplate: "api/address/{country}/{prefecture}", // ……?
+      defaults: new { controller = "address" }
+    );
+    // ……省略（あらかじめ記述されているルーティングの設定）……
+public class AddressController : ApiController
+{
+  public string Get(string country, string prefecture)
+  {
+    return country + prefecture;
+  }
+}
+	⇒　japantokyo
+
+
+○ Bodyの値を取得する
+
+HTTPリクエストの項目	値
+HTTPメソッド		POST
+HTTPヘッダ		Content-Type : application/json
+Body			{ Category : “Taro”, Number : “Tokyo” }（JSON形式）
+
+ASP.NET Web API フレームワークによってあらかじめサポートされている書式は、以下の3つである。
+
+application/x-www-form-urlencoded（フォームの送信時に使用される形式）
+application/json（JSON形式）
+application/xml（XML形式）
+
+制限
+注意点としては、先ほどのURL取得時のように属性クラスFromUriAttributeを付与しないことと、Personクラスのプロパティ名を、Bodyの値のJSONプロパティの名前と同じにすることである。
+public void Post(MyParemeter testpram2)
+        {
+        }
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+○ ApiControllerクラスのRequestプロパティを参照するーーーー調査必要？！！！！！！
+
+一例：
+ public void Post()
+  {
+    // URLの絶対パスを取得
+    string absolutePath = this.Request.RequestUri.AbsolutePath;
+    // Controler取得
+    string controllerName = this.Request.GetRouteData().Values["controller"];
+    // URLパラメータ「category」の値を取得
+    string routeCategory = this.Request.GetRouteData().Values["category"].ToString();
+    // クエリ文字列「number」の値の取得
+    string queryNumber = this.Request.GetQueryNameValuePairs().First(q => q.Key == "number").Value;
+    // ヘッダ「Accept」の値の取得
+    string acceptEncoding = this.Request.Headers.Accept.First().MediaType;
+    // Bodyに格納されたバイナリ値を（同期で）取得
+    Stream stream = ((StreamContent)this.Request.Content).ReadAsStreamAsync().Result;
+  }
+
+テスト用：
+IHttpRouteData routeData = request.GetRouteData();
+            //if (routeData==null) { return "routeData is null"; }
+            //else
+            //{
+            //    if (routeData.Values== null) { return "routeData.Values is null"; }
+            //    else
+            //    {
+            //        string str = "";
+            //        foreach(var dic in routeData.Values)
+            //        {
+            //            str += dic.Key;
+            //        }
+            //        return "data : " + str;
+            //    }
+            //}
+
+
+Post(HttpRequestMessage request) or 上記両方OK
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+Response
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+2-4 HTTPレスポンスの内容を指定する
+http://www.atmarkit.co.jp/ait/articles/1311/06/news070_3.html
+
+Void									ステータス・コード： 204 No Content
+void, HttpResponseMessage以外の型（独自クラスやプリミティブ型など）	ステータス・コード： 200 OK
+									Body：戻り値の値を書式で変換した値が格納される
+HttpResponseMessage							HttpResponseMessageクラスのプロパティで表される
+IHttpActionResult
+
+
+○ 戻り値にvoidを指定する
+下のコードのように、アクション・メソッドの戻り値にvoidを指定すると、ステータス・コード「201 No Content」がクライアントへ返される。
+
+public void Delete()
+{
+}
+○ 戻り値にvoid／HttpResponseMessage以外の型を指定する
+構築されるHTTPレスポンスは、ステータス・コードが「200 OK」、Bodyには戻り値を適切な書式（JSONやXMLなど）で変換された値が格納される
+Bodyへ格納するときに行われる変換の書式は、HTTPリクエストの内容（デフォルトでは、ヘッダ「Accept」の値）によって選択される。
+
+public string GetName()
+{
+  return "taro";
+}
+
+
+public class Person
+{
+  public int Id { get; set; }
+  public string Name { get; set; }
+}
+
+public class PersonsController : ApiController
+{
+  public IEnumerable<Person> Get()
+  {
+    var list = new List<Person>()
+      {
+        new Person() { Id = 1, Name = "taro" },
+        new Person() { Id = 2, Name = "hanako" }
+      };
+    return list;
+  }
+}
+ステータス・コード	200 OK
+Body（JSON形式の場合）	[{"Id":1,"Name":"taro"},{"Id":2,"Name":"hanako"}]
+
+public object Get()
+{
+  string[] members = new string[] {"taro", "hanako"};
+  return new { name = "groupA", members = members };
+}
+ステータス・コード	200 OK
+Body（JSON形式の場合）	{"name":"groupA","members":["taro","hanako"]}
+
+
+
+○ 戻り値にHttpResponseMessageを指定する
+
+public HttpResponseMessage Get()
+        {
+            var person = new MyParemeter() { Category = "taro" };
+            return Request.CreateResponse(HttpStatusCode.OK, person);
+        }
+
+
+⇒<MyParemeter xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/sampleGetUserInfoWebAPI.Controllers">
+<Category>taro</Category>
+<Number i:nil="true"/>
+</MyParemeter>
+
+
+public HttpResponseMessage Post()
+{
+  var customer = new Customer();
+  HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, customer);
+  response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = customer.Id }));
+  return response;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
