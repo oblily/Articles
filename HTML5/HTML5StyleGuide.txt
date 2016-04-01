@@ -1,0 +1,70 @@
+HTML(5) Style Guide and Coding Conventions
+Use Correct Document Type
+	<!DOCTYPE html>
+Use Lower Case Element Names
+Close All HTML Elements
+Close Empty HTML Elements
+	<meta charset="utf-8" />
+Use Lower Case Attribute Names
+Quote Attribute Values
+Image Attributes
+	Always use the alt attribute with images. It is important when the image cannot be viewed.
+	Always define image size. It reduces flickering because the browser can reserve space for images before they are loaded.
+	<img src="html5.gif" alt="HTML5" style="width:128px;height:128px">
+Spaces and Equal Signs
+	space-less is easier to read, and groups entities better together:
+	<link rel="stylesheet" href="styles.css">
+Avoid Long Code Lines
+	Try to avoid code lines longer than 80 characters.
+Blank Lines and Indentation
+	Do not add blank lines without a reason.
+	For readability, add 2 spaces of indentation. Do not use TAB.
+Meta Data
+	The <title> element is required in HTML5. 
+	To ensure proper interpretation, and correct search engine indexing, both the language and the character encoding should be defined as early as possible in a document:
+	<html lang="en-US">
+	<meta charset="UTF-8">
+Style Sheets
+	Use simple syntax for linking style sheets (the type attribute is not necessary):
+		<link rel="stylesheet" href="styles.css">
+	Short rules can be written compressed, on one line, like this:
+		p.into {font-family: Verdana; font-size: 16em;}
+	Long rules should be written over multiple lines:
+		body {
+  		  background-color: lightgrey;
+  		  font-family: "Arial Black", Helvetica, sans-serif;
+  		  font-size: 16em;
+  		  color: black;
+		}
+		Place the opening bracket on the same line as the selector.
+		Use one space before the opening bracket.
+		Use 2 spaces of indentation.
+		Use colon plus one space between each property and its value.
+		Use space after each comma or semicolon.
+		Use semicolon after each property-value pair, including the last.
+		Only use quotes around values if the value contains spaces.
+		Place the closing bracket on a new line, without leading spaces.
+		Avoid lines over 80 characters.
+Use Lower Case File Names
+	Most web servers (Apache, Unix) are case sensitive about file names
+	Other web servers (Microsoft, IIS) are not case sensitive
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,161 @@
+HTML Canvas Tutorial
+The <canvas> element must have an id attribute so it can be referred to by JavaScript.
+By default, the <canvas> element has no border and no content.
+<canvas id="myCanvas" width="200" height="100"
+style="border:1px solid #000000;">
+</canvas>
+
+HTML Canvas Drawing
+Step 1: Find the Canvas Element
+	var canvas = document.getElementById("myCanvas");
+Step 2: Create a Drawing Object
+	var ctx = canvas.getContext("2d");
+Step 3: Draw on the Canvas
+	Set the fill style of the drawing object to the color red:
+	The fillStyle property can be a CSS color, a gradient, or a pattern. The default fillStyle is black.
+		ctx.fillStyle = "#FF0000";
+	ctx.fillRect(0,0,150,75);
+
+HTML Canvas Coordinates
+The HTML canvas is a two-dimensional grid.
+The upper-left corner of the canvas has the coordinates (0,0)
+Draw a Line
+	moveTo(x,y) - defines the starting point of the line
+	lineTo(x,y) - defines the ending point of the line
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
+	ctx.moveTo(0,0);
+	ctx.lineTo(200,100);
+	ctx.stroke(); //use one of the "ink" methods
+Draw a Circle
+	beginPath();
+	arc(x,y,r,start,stop)
+	ctx.beginPath();
+	ctx.arc(95,50,40,0,2*Math.PI);
+	ctx.stroke();
+
+
+Canvas - Gradients
+Gradients can be used to fill rectangles, circles, lines, text, etc. Shapes on the canvas are not limited to solid colors.
+	createLinearGradient(x,y,x1,y1) - creates a linear gradient
+	createRadialGradient(x,y,r,x1,y1,r1) - creates a radial/circular gradient
+		// Create gradient
+		var grd=ctx.createLinearGradient(0,0,200,0);
+		//var grd=ctx.createRadialGradient(75,50,5,90,60,100);
+		grd.addColorStop(0,"red");
+		grd.addColorStop(1,"white");
+		// Fill with gradient
+		ctx.fillStyle=grd;
+		ctx.fillRect(10,10,150,80);
+
+HTML Canvas Text
+Drawing Text on the Canvas
+	font - defines the font properties for the text
+	fillText(text,x,y) - draws "filled" text on the canvas
+	strokeText(text,x,y) - draws text on the canvas (no fill)
+		ctx.font = "30px Arial";
+		ctx.fillStyle = "red";
+		ctx.textAlign = "center";
+		ctx.fillText("Hello World", canvas.width/2, canvas.height/2); 
+		//ctx.strokeText("Hello World",10,50);
+
+HTML Canvas Images
+	You cannot draw the image before the image has loaded. Call the function from window.onload().
+		window.onload = function() {
+    			var canvas = document.getElementById("myCanvas");
+    			var ctx = canvas.getContext("2d");
+    			var img = document.getElementById("scream");
+    			ctx.drawImage(img, 10, 10);
+		};
+
+Canvas Clock
+  ......
+
+
+HTML Canvas Reference
+
+Colors, Styles, and Shadows
+Property	Description
+fillStyle	Sets or returns the color, gradient, or pattern used to fill the drawing
+strokeStyle	Sets or returns the color, gradient, or pattern used for strokes
+shadowColor	Sets or returns the color to use for shadows
+shadowBlur	Sets or returns the blur level for shadows
+shadowOffsetX	Sets or returns the horizontal distance of the shadow from the shape
+shadowOffsetY	Sets or returns the vertical distance of the shadow from the shape
+
+http://www.w3schools.com/tags/ref_canvas.asp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

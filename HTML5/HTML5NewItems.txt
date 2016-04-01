@@ -1,0 +1,112 @@
+New HTML5 API's (Application Programming Interfaces)
+The most interesting new API's are:
+
+HTML Geolocation
+HTML Drag and Drop
+HTML Local Storage
+HTML Application Cache
+HTML Web Workers
+HTML SSE
+
+
+
+New Elements in HTML5
+1:New Semantic/Structural Elements
+Tag		Description
+<article>	Defines an article in the document
+		An article should make sense on its own, and it should be possible to read it independently from the rest of the web site.
+<aside>		Defines content aside from the page content
+<bdi>		Defines a part of text that might be formatted in a different direction from other text
+<details>	Defines additional details that the user can view or hide
+<dialog>	Defines a dialog box or window
+<figcaption>	Defines a caption for a <figure> element
+<figure>	Defines self-contained content, like illustrations, diagrams, photos, code listings, etc.
+		<figure>
+  			<img src="pic_mountain.jpg" alt="The Pulpit Rock" width="304" height="228">
+  			<figcaption>Fig1. - The Pulpit Rock, Norway.</figcaption>
+		</figure>		
+<footer>	Defines a footer for the document or a section
+		A footer typically contains the author of the document, copyright information, links to terms of use, contact information, etc.
+<header>	Defines a header for the document or a section
+		The <header> element should be used as a container for introductory content.
+		You can have several <header> elements in one document.
+<main>		Defines the main content of a document
+<mark>		Defines marked or highlighted text
+<menuitem> 	Defines a command/menu item that the user can invoke from a popup menu
+<meter>		Defines a scalar measurement within a known range (a gauge)
+<nav>		Defines navigation links in the document
+		The <nav> element is intended for large blocks of navigation links.
+<progress>	Defines the progress of a task
+<rp>		Defines what to show in browsers that do not support ruby annotations
+<rt>		Defines an explanation/pronunciation of characters (for East Asian typography)
+<ruby>		Defines a ruby annotation (for East Asian typography)
+<section>	Defines a section in the document
+		A section is a thematic grouping of content, typically with a heading.
+		A Web site's home page could be split into sections for introduction, content, and contact information.
+<summary>	Defines a visible heading for a <details> element
+<time>		Defines a date/time
+<wbr>		Defines a possible line-break
+
+HTML5の「section要素」と「article要素」の違い
+その部分だけを抜き取って、独立したページとして成り立つだけの内容であれば「article要素」を使用し、それ以外は「section要素」を使います。
+内容が異なるものを区別する場合は、articleタグを使う。
+関連している内容を区別する場合は、sectionタグを使う。
+In the HTML5 standard, the <article> element defines a complete, self-contained block of related elements.
+The <section> element is defined as a block of related elements.
+
+2:New Form Elements
+Tag		Description
+<datalist>	Defines pre-defined options for input controls
+<keygen>	Defines a key-pair generator field (for forms)
+<output>	Defines the result of a calculation
+3:New Input Types
+color
+date
+datetime
+datetime-local
+email
+month
+number
+range
+search
+tel
+time
+url
+week
+4:New Input Attributes
+autocomplete
+autofocus
+form
+formaction
+formenctype
+formmethod
+formnovalidate
+formtarget
+height and width
+list
+min and max
+multiple
+pattern (regexp)
+placeholder
+required
+step
+5:HTML5 Graphics
+Tag		Description
+<canvas>	Defines graphic drawing using JavaScript
+		The <canvas> element is only a container for graphics. You must use a script to actually draw the graphics.
+A canvas is a rectangular area on an HTML page. By default, a canvas has no border and no content.
+(Always specify an id attribute (to be referred to in a script), and a width and height attribute to define the size of the canvas.)
+
+
+
+
+
+<svg>		Defines graphic drawing using SVG
+6:New Media Elements
+Tag		Description
+<audio>		Defines sound or music content
+<embed>		Defines containers for external applications (like plug-ins)
+<source>	Defines sources for <video> and <audio>
+<track>		Defines tracks for <video> and <audio>
+<video>		Defines video or movie content
+

@@ -1,0 +1,400 @@
+
+HTML5 Geolocation
+	The HTML Geolocation API is used to locate a user's position.
+	Geolocation is much more accurate for devices with GPS, like iPhone.
+  Geolocation is also very useful for location-specific information, like:
+    Up-to-date local information
+    Showing Points-of-interest near the user
+    Turn-by-turn navigation (GPS)
+  The getCurrentPosition() Method - Return Data
+    The getCurrentPosition() method returns an object if it is successful. The latitude, longitude and accuracy properties are always returned. The other properties are returned if available:
+    Property		Returns
+    coords.latitude	The latitude as a decimal number
+    coords.longitude	The longitude as a decimal number
+    coords.accuracy	The accuracy of position
+    coords.altitude	The altitude in meters above the mean sea level
+    coords.altitudeAccuracy	The altitude accuracy of position
+    coords.heading	The heading as degrees clockwise from North
+    coords.speed	The speed in meters per second
+    timestamp		The date/time of the response
+  watchPosition() - Returns the current position of the user and continues to return updated position as the user moves (like the GPS in a car).
+  clearWatch() - Stops the watchPosition() method.
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo">Click the button to get your position.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<div id="mapholder"></div>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    //Check if Geolocation is supported
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+	//Returns the current position of the user and continues to return updated position as the user moves (like the GPS in a car).
+	navigator.geolocation.watchPosition(showPosition3);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition3(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude; 
+}
+
+function showPosition2(position) {
+    var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+    //To display the result in a map, you need access to a map service, like Google Maps.
+    var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
+    +latlon+"&zoom=14&size=400x300&sensor=false";
+    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+}
+
+//How to show an interactive Google Map with a marker, zoom and drag options.
+function showPosition(position) {
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
+    latlon = new google.maps.LatLng(lat, lon)
+    mapholder = document.getElementById('mapholder')
+    mapholder.style.height = '250px';
+    mapholder.style.width = '500px';
+
+    var myOptions = {
+    center:latlon,zoom:14,
+    mapTypeId:google.maps.MapTypeId.ROADMAP,
+    mapTypeControl:false,
+    navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+    }
+    
+    var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
+    var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+}
+
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+</script>
+
+</body>
+</html>
+
+---------------------------------------------------------------------------
+
+HTML5 Drag and Drop
+	In HTML5, drag and drop is part of the standard, and any element can be draggable.
+
+	Step:
+	1:To make an element draggable, set the draggable attribute to true.
+	2:specify what should happen when the element is dragged.
+
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+#div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+</style>
+<script>
+//The ondragover event specifies where the dragged data can be dropped.
+function allowDrop(ev) {
+    //By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element.
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    //The dataTransfer.setData() method sets the data type and the value of the dragged data:
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+//When the dragged data is dropped, a drop event occurs.
+function drop(ev) {
+    //prevent the browser default handling of the data (default is open as link on drop)
+    ev.preventDefault();
+    //This method will return any data that was set to the same type in the setData() method
+    var data = ev.dataTransfer.getData("text");
+    //Append the dragged element into the drop element
+    ev.target.appendChild(document.getElementById(data));
+}
+</script>
+</head>
+<body>
+
+<p>Drag the W3Schools image into the rectangle:</p>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br>
+<img id="drag1" src="img_logo.gif" draggable="true" ondragstart="drag(event)" width="336" height="69">
+
+</body>
+</html>
+
+
+---------------------------------------------------------------------------------
+HTML5 Local Storage
+	With local storage, web applications can store data locally within the user's browser.
+	Unlike cookies, the storage limit is far larger (at least 5MB) and information is never transferred to the server.
+	Local storage is per origin (per domain and protocol). All pages, from one origin, can store and access the same data.
+
+	window.localStorage - stores data with no expiration date
+	window.sessionStorage - stores data for one session (data is lost when the browser tab is closed)
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="result"></div>
+
+<script>
+// Check browser support
+if (typeof(Storage) !== "undefined") {
+    // Store
+    localStorage.setItem("lastname", "Smith");
+    // Retrieve
+    document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+} else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+}
+//Note:Name/value pairs are always stored as strings. Remember to convert them to another format when needed!
+</script>
+
+</body>
+</html>
+
+--------------------------------------------------------------------------------------------------------
+HTML5 Application Cache
+	With application cache it is easy to make an offline version of a web application, by creating a cache manifest file.
+	HTML5 introduces application cache, which means that a web application is cached, and accessible without an internet connection.
+	Application cache gives an application three advantages:
+		1:Offline browsing - users can use the application when they're offline
+		2:Speed - cached resources load faster
+		3:Reduced server load - the browser will only download updated/changed resources from the server
+
+	Browser Support
+		IE10~,...
+	To enable application cache, include the manifest attribute in the document's <html> tag:
+
+The Manifest File
+	The manifest file is a simple text file, which tells the browser what to cache (and what to never cache).
+	The manifest file has three sections:
+		CACHE MANIFEST - Files listed under this header will be cached after they are downloaded for the first time
+			CACHE MANIFEST
+			# 2012-02-21 v1.0.0
+Tip: Lines starting with a "#" are comment lines, but can also serve another purpose. An application's cache is only updated when its manifest file changes. If you edit an image or change a JavaScript function, those changes will not be re-cached. Updating the date and version in a comment line is one way to make the browser re-cache your files.
+			/theme.css
+			/logo.gif
+			/main.js
+			the browser will download the three files from the root directory of the web site. Then, whenever the user is not connected to the internet, the resources will still be available.
+		NETWORK - Files listed under this header require a connection to the server, and will never be cached
+			  Use * to indicate all other resources require an internet connection.
+			NETWORK:
+			login.asp
+		FALLBACK - Files listed under this header specifies fallback pages if a page is inaccessible
+			FALLBACK:
+			/html/ /offline.html(Note:The first URI is the resource, the second is the fallback.)
+
+Updating the Cache
+Once an application is cached, it remains cached until one of the following happens:
+	The user clears the browser's cache
+	The manifest file is modified (see tip below)
+	The application cache is programmatically updated
+
+
+
+
+
+<!DOCTYPE html>
+<html manifest="demo_html.appcache">
+<body>
+
+<script src="demo_time.js"></script>
+
+<p id="timePara"><button onclick="getDateTime()">Get Date and Time</button></p>
+
+<p><img src="img_logo.gif" width="336" height="69"></p>
+
+<p>Try opening <a href="tryhtml5_html_manifest.htm" target="_blank">this page</a>, then go offline, and reload the page. The script and the image should still work.</p>
+
+</body>
+</html>
+
+----------------------------------------------------------------------------------------------------------------
+
+HTML5 Web Workers
+
+When executing scripts in an HTML page, the page becomes unresponsive until the script is finished.
+A web worker is a JavaScript that runs in the background, independently of other scripts, without affecting the performance of the page. You can continue to do whatever you want: clicking, selecting things, etc., while the web worker runs in the background.
+
+demo_workers.js:
+var i = 0;
+
+function timedCount() {
+    i = i + 1;
+    postMessage(i);
+    setTimeout("timedCount()",500);
+}
+
+timedCount();
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Count numbers: <output id="result"></output></p>
+<button onclick="startWorker()">Start Worker</button> 
+<button onclick="stopWorker()">Stop Worker</button>
+
+<p><strong>Note:</strong> Internet Explorer 9 and earlier versions do not support Web Workers.</p>
+
+<script>
+var w;
+
+function startWorker() {
+    if(typeof(Worker) !== "undefined") {
+        if(typeof(w) == "undefined") {
+            w = new Worker("demo_workers.js");
+        }
+        w.onmessage = function(event) {
+            document.getElementById("result").innerHTML = event.data;
+        };
+    } else {
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Workers...";
+    }
+}
+
+function stopWorker() { 
+    w.terminate();
+    //If you set the worker variable to undefined, after it has been terminated, you can reuse the code:
+    w = undefined;
+}
+</script>
+
+</body>
+</html>
+
+-0---------------------------------------------------------------------------------------------------
+HTML5 Server-Sent Events
+	A server-sent event(One Way Messaging) is when a web page automatically gets updates from a server.
+	Examples: Facebook/Twitter updates, stock price updates, news feeds, sport results, etc.
+
+*:IE not supported
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Getting server updates</h1>
+<div id="result"></div>
+
+<script>
+if(typeof(EventSource) !== "undefined") {
+    //The EventSource object is used to receive server-sent event notifications:
+    var source = new EventSource("demo_sse.php");
+    //Each time an update is received, the onmessage event occurs
+    source.onmessage = function(event) {
+        document.getElementById("result").innerHTML += event.data + "<br>";
+    };
+    source.onopen = function(event) {
+        document.getElementById("result").innerHTML += "When a connection to the server is opened" + "<br>";
+    };
+    source.onerror = function(event) {
+        document.getElementById("result").innerHTML += "When an error occurs" + "<br>";
+    };
+} else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
